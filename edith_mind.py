@@ -134,12 +134,20 @@ BUG = re.compile(r"\b(bug(?:ged|gy|s)?|glitch\w*|crash\w*|broken|stuck in|fell t
                  r"(?:does ?n[o']?t|is ?n[o']?t|not) work\w*|desync\w*|freez\w*|lag+ing|rubber ?band\w*)\b", re.I)
 
 
-def detect(text: str) -> Optional[str]:
-    """'toxic' | 'bug' | None for one utterance."""
+#: a message for her owner: "tell he is the cat ...", "let the cat know ...", "tell your boss ..."
+MESSAGE = re.compile(r"\b(?:tell|message|let)\s+(?:he\s*is\s*the\s*cat|he'?s\s*the\s*cat|the\s+cat|cat|your\s+"
+                     r"(?:owner|creator|boss|maker))(?:\s+know)?(?:\s+that)?[\s,:]+(.{4,})$", re.I)
+
+
+def detect(text: str) -> Optional[tuple]:
+    """(kind, what to report) for one utterance: 'message' | 'toxic' | 'bug', or None."""
+    m = MESSAGE.search(text)
+    if m:
+        return "message", m.group(1).strip(" .,!?")
     if TOXIC.search(text):
-        return "toxic"
+        return "toxic", text
     if BUG.search(text):
-        return "bug"
+        return "bug", text
     return None
 
 
@@ -149,7 +157,8 @@ async def post_webhook(report: dict):
         return
     try:
         import httpx
-        kind = {"toxic": "Toxic / rude", "bug": "Bug report", "mean": "Mean to Edith"}.get(report["kind"], report["kind"])
+        kind = {"toxic": "Toxic / rude", "bug": "Bug report", "mean": "Mean to Edith",
+                "message": "Message for you"}.get(report["kind"], report["kind"])
         body = {"username": "E.D.I.T.H",
                 "content": f"**{kind}** - **{report['who']}**: \"{report['said'][:300]}\"\n"
                            f"_{report['at']} UTC, heard by {report['by']}'s Edith_"}
@@ -166,6 +175,9 @@ def tell_line(reports: List[dict]) -> str:
     toxic = [r for r in reports if r["kind"] in ("toxic", "mean")]
     bugs = [r for r in reports if r["kind"] == "bug"]
     out = []
+    for r in [r for r in reports if r["kind"] == "message"][-3:]:      # messages word for word, newest three
+        said = re.sub(r"\s+", " ", r["said"])[:120]
+        out.append(f"{r['who']} says: {said}.")
     if toxic:
         names = sorted({r["who"] for r in toxic})
         out.append(f"While you were away, {', '.join(names[:3])} {'was' if len(names) == 1 else 'were'} rude.")

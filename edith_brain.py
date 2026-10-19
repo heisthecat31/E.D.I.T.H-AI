@@ -1653,14 +1653,16 @@ class Edith:
         speaker = who if who and who != "you" else self.me
         if not speaker or speaker == OWNER:
             return
-        kind = detect(text)
-        if not kind:
+        hit = detect(text)
+        if not hit:
             return
+        kind, said = hit
         now = time.time()
-        if now - _report_seen.get((speaker, kind), 0) < 120:          # (every Edith in the match hears it)
+        key = (speaker, kind, said.lower() if kind == "message" else "")  # (every Edith in the match hears it:
+        if now - _report_seen.get(key, 0) < 120:                       #  one report; each message once)
             return
-        _report_seen[(speaker, kind)] = now
-        r = {"kind": kind, "who": speaker, "said": text[:300], "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
+        _report_seen[key] = now
+        r = {"kind": kind, "who": speaker, "said": said[:300], "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
              "by": self.me or "?", "told": False}
         rec = self_rec()
         rec["reports"].append(r)

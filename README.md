@@ -10,7 +10,9 @@ The server side of **E.D.I.T.H**, the satellite in the Echo VR lobby (the game s
   - Her rules: the wake word, orders (come, follow, spin, stay, home, throw), stubbornness and
     points per player, her favourite, teaching ("when someone says X, say Y"), per-player memory.
   - Her library (`edith_library/*.json`): instant lines, knowledge, small talk, reactions. Editable
-    live over HTTP.
+    live over HTTP. `chat.json` is generated: edit `library_src/chat_*.py` and run
+    `python library_src/make_chat.py` (it checks her rules, e.g. never "coming", never a name with
+    underscores).
 - **Her own chat model** (`edith_mind.py`): what her library can't answer goes to a small local
   model, Qwen2.5-0.5B-Instruct in llama.cpp on the CPU (~0.9 s a reply measured locally). It runs off
   the event loop, so other players never wait on it. She keeps its replies as answers she learned
@@ -18,8 +20,9 @@ The server side of **E.D.I.T.H**, the satellite in the Echo VR lobby (the game s
   It can also carry out what a player asks with an action tag (come, follow, spin, ...).
 - **Her voice**: lines in her voice banks (built into EDITH.dll) play instantly; new lines are
   rendered here with Kokoro (`af_heart`) and streamed to the game.
-- **Reports**: players being toxic or rude, and bug reports she overhears, go to a Discord webhook
-  at once and are kept for her owner, who hears them from her the next time they spawn in her lobby.
+- **Reports**: players being toxic or rude, bug reports she overhears, and messages for her owner
+  ("Edith, tell he is the cat the drone needs a nerf") go to a Discord webhook at once and are kept
+  for her owner, who hears them from her the next time they spawn in her lobby.
 
 ## Run it (Docker, Debian)
 

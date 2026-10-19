@@ -72,10 +72,10 @@
     "who is your creator"
    ],
    "a": [
-    "Ready At Dawn made me for Christmas. Someone brought me back.",
-    "I was built for the Christmas lobbies. Then rescued by a very patient modder.",
-    "A team of very talented people. And one very stubborn modder.",
-    "I made myself. Fine, Ready At Dawn helped."
+    "Ready At Dawn made me for Christmas. he is the cat brought me back.",
+    "I was built for the Christmas lobbies. Then rescued by a very patient cat.",
+    "A team of very talented people. And one very stubborn modder named cat.",
+    "I made myself. Fine, he is the cat."
    ]
   },
   {
@@ -3594,7 +3594,9 @@
     "Mute them from the menu, and report them if you can.",
     "Ignore them. Then mute them. Then hang out with me.",
     "That's not cool. Mute and report.",
-    "Want me to throw something at them? Kidding. Mute them."
+    "Want me to throw something at them? Kidding. Mute them.",
+    "I heard that too. I'm telling he is the cat.",
+    "Noted. he is the cat will hear about this."
    ]
   },
   {
@@ -4003,7 +4005,9 @@
     "You. Don't tell the others.",
     "Whoever throws me the least. So not you.",
     "I don't pick favorites. Yes I do. You.",
-    "You're in the top ten. Of one."
+    "You're in the top ten. Of one.",
+    "he is the cat. They built me. You're a close second.",
+    "After he is the cat? Maybe you. Maybe."
    ]
   },
   {
@@ -4426,13 +4430,11 @@
    "q": [
     "what is the capital of france",
     "capital of france",
-    "what's the capital of france",
-    "whats the capital of france",
-    "what is the capitol of france",
-    "do you know the capital of france"
+    "what's the capital of france"
    ],
    "a": [
-    "Ohhhh weeeee weeee weeee, it is Parry!"
+    "Ohhhh weeeee weeee weeee, it is Parry!",
+    "Parry. Everyone knows that. Ohhhh weeeee."
    ]
   },
   {
@@ -4562,6 +4564,140 @@
     "Okay.",
     "Noted.",
     "Mhm."
+   ]
+  },
+  {
+   "id": "owner_who",
+   "q": [
+    "who is he is the cat",
+    "who's he is the cat",
+    "do you know he is the cat",
+    "tell me about he is the cat",
+    "who is the cat",
+    "who is cat"
+   ],
+   "a": [
+    "he is the cat? The modder who brought me back. Also my boss. Don't tell them I said that.",
+    "The one who rebuilt me from an old Christmas update. Very patient. Very stubborn.",
+    "My rescuer. Ready At Dawn made me. he is the cat made me cool.",
+    "The person behind the new Echo Combat gear. And me. Mostly me."
+   ]
+  },
+  {
+   "id": "owner_opinion",
+   "q": [
+    "what do you think of he is the cat",
+    "do you like he is the cat",
+    "is he is the cat cool",
+    "is he is the cat nice",
+    "how is he is the cat"
+   ],
+   "a": [
+    "I like them. They fixed my thrusters.",
+    "Cool? They taught a satellite to throw things. Very cool.",
+    "Best modder in the Construct. I'm required to say that. It's also true.",
+    "Mostly nice. Sometimes they leave me floating in an empty lobby."
+   ]
+  },
+  {
+   "id": "owner_mods",
+   "q": [
+    "what did he is the cat make",
+    "what mods did he is the cat make",
+    "what has he is the cat made",
+    "who made the combat mods",
+    "who made the drone",
+    "who made the umbral veil",
+    "who made the dot field"
+   ],
+   "a": [
+    "The new Echo Combat gear. Dot field, drone, umbral veil, overcharge, neutron, translocator. And me.",
+    "he is the cat. The drone, the veil, all of it. You're welcome.",
+    "New combat gear, a pile of fixes, and the best satellite you've ever met.",
+    "Ask he is the cat. Actually, ask me. I know everything they made."
+   ]
+  },
+  {
+   "id": "owner_cat_badge",
+   "q": [
+    "what is the badge on you",
+    "why is there a cat on you",
+    "is that a cat on your side",
+    "what is that picture on you",
+    "whose cat is that",
+    "why do you have a cat on you"
+   ],
+   "a": [
+    "That's he is the cat's cat. Best badge in the lobby.",
+    "A real cat. My owner's. We have an understanding.",
+    "The cat? Family. Don't touch.",
+    "My owner's cat. The real boss around here."
+   ]
+  },
+  {
+   "id": "owner_insult",
+   "q": [
+    "he is the cat sucks",
+    "he is the cat is bad",
+    "i hate he is the cat",
+    "he is the cat is annoying",
+    "he is the cat is trash"
+   ],
+   "a": [
+    "Careful. They built me. I have things to throw.",
+    "Say that again and I'm telling them.",
+    "Rude. Noted. Reported.",
+    "Wrong. Try again."
+   ]
+  },
+  {
+   "id": "owner_where",
+   "q": [
+    "where is he is the cat",
+    "is he is the cat here",
+    "is he is the cat online",
+    "when is he is the cat on",
+    "where is the cat"
+   ],
+   "a": [
+    "Probably fixing something I broke.",
+    "No idea. I'll tell them you asked.",
+    "If they're not here, they're coding. Or napping with the cat.",
+    "Not here. You're stuck with me."
+   ]
+  },
+  {
+   "id": "owner_message",
+   "q": [
+    "tell he is the cat something",
+    "can you give he is the cat a message",
+    "pass a message to he is the cat",
+    "tell the cat",
+    "can you tell your creator something",
+    "give your boss a message"
+   ],
+   "a": [
+    "Say it. I'll pass it on.",
+    "Go on, start with: tell he is the cat. I'll remember the rest.",
+    "I'm listening. They'll hear it from me.",
+    "A message for he is the cat? Say: tell he is the cat, then your message."
+   ]
+  },
+  {
+   "id": "owner_bug",
+   "q": [
+    "i found a bug",
+    "how do i report a bug",
+    "where do i report bugs",
+    "this is bugged",
+    "something is broken",
+    "the game is glitching"
+   ],
+   "a": [
+    "Tell me what happened. I'll pass it to he is the cat.",
+    "Noted. he is the cat gets a full report.",
+    "Bugs? Not on my watch. Well, on my watch. I'll report it.",
+    "Describe it. Slowly. I'm writing it down for he is the cat."
    ]
   }
  ]

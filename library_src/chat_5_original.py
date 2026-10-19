@@ -1,0 +1,21 @@
+"""Chat bank part 5: her own 2017 lines (played from her real recordings, add_recordings.py)."""
+ENTRIES = [
+    ("photo", ["take a picture", "take a photo", "selfie", "say cheese", "smile for the camera"],
+     ["Say cheese!", "Say cheese! Hold still.", "Say cheese!"]),
+    ("magic", ["do some magic", "do a magic trick", "abracadabra", "make something disappear"],
+     ["Presto!", "Presto! Did you see that?"], "spin"),
+    ("snow_cones", ["i want a snow cone", "do you have snow cones", "im thirsty", "i want ice cream"],
+     ["Who wants snow cones?", "Who wants snow cones? Me."]),
+    ("deck_halls", ["are you ready for christmas", "lets decorate", "deck the halls", "is it the holidays"],
+     ["Are you ready to deck some halls?", "Welcome. Happy holidays."]),
+    ("cozy", ["its warm here", "this is cozy", "its cold in here", "brr its cold"],
+     ["Ooh, so cozy.", "Mmm, frosty."]),
+    ("gingerbread", ["run", "catch me if you can", "you cant catch me", "race me"],
+     ["Run, run, run as fast as you can.", "Run, run, run as fast as you can. Not fast enough."], "follow"),
+    ("hamburgers", ["can you cook", "im hungry for burgers", "do you like burgers", "make me food"],
+     ["With some help, I could probably cook some hamburgers here.", "Burgers? With some help, sure."]),
+    ("stunning", ["isnt it beautiful", "look at the decorations", "this place is pretty", "nice lobby"],
+     ["Wouldn't you say this holiday is stunning?", "Very nice."]),
+    ("how_do_i_look_2", ["do you like my outfit", "check out my look", "i changed my outfit", "look at my new skin"],
+     ["Aww, you look great!", "Well, you look festive.", "Ooh, I give it a ten."]),
+]
