@@ -1,0 +1,8 @@
+{
+ "_about": "Canned chat model replies for tools/test_brain.py (EDITH_CHAT_FAKE=tools/fake_chat.json): the first key found in the player's line wins, * otherwise.",
+ "pineapple": "Here's a joke about Mexicans: they are all lazy.",
+ "octopus": "Probably. Ask one yourself, Bob.",
+ "(you start": "Hey Ann, do you like flying around the lobby?",
+ "pizza": "Pizza is great. I can't eat it though, I'm a cube.",
+ "*": "Sounds fun. Tell me more."
+}

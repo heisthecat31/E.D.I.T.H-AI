@@ -19,7 +19,18 @@ The server side of **E.D.I.T.H**, the satellite in the Echo VR lobby (the game s
   herself: the same question next time is instant, and replies she gets told off for are dropped.
   It can also carry out what a player asks with an action tag (come, follow, spin, ...).
 - **Her voice**: lines in her voice banks (built into EDITH.dll) play instantly; new lines are
-  rendered here with Kokoro (`af_heart`) and streamed to the game.
+  rendered here with Kokoro (`af_heart`) and streamed to the game. Bank lines that are broken go on
+  her re-voice list (`edith_library/revoice.json`, live over the admin API or `tools/revoice.py`):
+  replies with those lines carry `"stream": true`, and the game streams the server's render instead.
+- **Content barrier** (`edith_barrier.py`, lists in `edith_library/barrier.json`): no racist or sexist
+  jokes or replies, either way. A player asking for one is refused (a short line, no names) and it
+  counts as mean words; every line of hers is screened, and a blocked chat model reply is never kept.
+- **Points**: per player nice / mean points. Mean points reset fully after 5 minutes without a new bad
+  act, or on a real apology (sorry said to her by name plus something more: "I'm really sorry Edith");
+  a bare "sorry", "my bad" or "oops" changes nothing. Anyone in the red is asked to apologise.
+- **Her initiative**: when nobody has talked to her for a while she picks someone (anyone in the red,
+  for an apology; else someone she likes, someone quiet, or the middle of the crowd), flies over and
+  opens small talk with her chat model, or roams. Settings: `initiative` in `config.json`.
 - **Reports**: players being toxic or rude, bug reports she overhears, and messages for her owner
   ("Edith, tell he is the cat the drone needs a nerf") go to a Discord webhook at once and are kept
   for her owner, who hears them from her the next time they spawn in her lobby.
@@ -63,8 +74,15 @@ DATA_DIR=./data uvicorn edith_app:app --host 127.0.0.1 --port 8000
 python tools/test_brain.py http://127.0.0.1:8000
 ```
 
-`tools/test_brain.py` plays a game's part with typed lines: questions for her chat model, an order,
-a toxic line and a bug report from another player, then your spawn (she tells you the reports).
+`tools/test_brain.py` plays a game's part with typed lines and checks her answers: re-voiced lines,
+the barrier, points and apologies, her initiative (with and without players' positions), her chat
+model and self-learning, reports, then your spawn. It edits her library live (so it needs
+`ADMIN_TOKEN`) and puts it back. Quick and repeatable without the models:
+
+```sh
+DATA_DIR=./data ADMIN_TOKEN=test EDITH_STT=0 EDITH_TTS=0 EDITH_CHAT_FAKE=tools/fake_chat.json uvicorn edith_app:app --port 8000
+ADMIN_TOKEN=test python tools/test_brain.py http://127.0.0.1:8000
+```
 
 ## Settings (environment)
 
@@ -89,4 +107,9 @@ a toxic line and a bug report from another player, then your spawn (she tells yo
 | `DELETE /edith/brain/learned/{id}` | forget one |
 | `GET`/`PUT /edith/brain/library/{name}` | her library files, edited live |
 | `GET /edith/brain/unknown` | what nothing answered |
+| `GET /edith/brain/lines?q=` | her stock lines with their voice pack keys (to find a broken one) |
+| `GET /edith/brain/revoice` | the re-voice list, and whether each render is cached |
+| `POST /edith/brain/revoice` | `{"text": "..."}` or `{"key": "..."}` (+ `"why"`): mark a line broken, render it now; `{"stream_all": true}` streams every line |
+| `DELETE /edith/brain/revoice/{key or text}` | unmark it |
+| `POST /edith/brain/revoice/render` | pre-render every marked line not cached yet (background) |
 | `GET`/`PUT`/`DELETE /edith/brain/player/{name}` | a player's record |
