@@ -30,5 +30,14 @@
   "new_face": ["Like this?", "How's this one?", "Behold.", "Better?"],
   "filler": ["Hm?", "Yes?", "What?", "Mhm."],
   "nod": ["Uh huh.", "Interesting.", "Okay.", "Sure.", "If you say so."],
-  "taught_answer": ["Ooh. Now I know that one.", "Got it. Next time I'll know.", "Learned. Thanks."]
+  "taught_answer": ["Ooh. Now I know that one.", "Got it. Next time I'll know.", "Learned. Thanks."],
+  "refuse_bigot": ["No. I don't do jokes like that.", "Not funny. Not doing it.", "Nope. I don't punch down.", "Hard no. Ask me something else."],
+  "refuse_slur": ["Not that word. Not here.", "Watch your language.", "Nope. We don't say that.", "Rude. And not okay."],
+  "screened": ["Hmm, never mind. Ask me something else.", "Let's talk about something else.", "Actually, forget it. Next question."],
+  "ask_sorry": ["That was mean. I'm waiting for an apology.", "You owe me an apology, you know.", "An apology would fix this. A real one.", "Still waiting for that sorry."],
+  "sorry_accepted": ["Apology accepted. Clean slate.", "Okay. I forgive you. This time.", "Fine. We're good again.", "Aw. Okay, all forgiven."],
+  "sorry_mean_it": ["Say it like you mean it.", "That's not an apology. Try again, properly.", "Nope. Say it properly, to me."],
+  "sorry_nothing": ["We're fine. Nothing to forgive.", "Apology for what? We're good."],
+  "opener": ["So. Having fun out there?", "What are you up to today?", "Arena or combat, which one do you play more?", "You're quiet. Say something!", "What brings you to the lobby?", "Tell me something interesting.", "Bored yet? I am."],
+  "opener_like": ["Still into {thing}?", "Done any {thing} lately?", "I remember you like {thing}. Tell me more."]
 }

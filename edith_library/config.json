@@ -1,5 +1,5 @@
 {
-  "_about": "Edith's brain settings (Railway/SparkAPI/edith_brain.py), edited live like the rest of this folder. voice / fallback_voice / voice_speed make the voice pack keys (sha1 of voice|speed|text): change them only together with a new pack.",
+  "_about": "Edith's brain settings (edith_brain.py), edited live like the rest of this folder. voice / fallback_voice / voice_speed make the voice pack keys (sha1 of voice|speed|text): change them only together with a new pack.",
   "name": "Edith",
   "wake_words": ["edith", "edit", "edyth", "edeth", "eadith", "eddith", "editha", "edie", "eadie", "satellite"],
   "follow_up_seconds": 8,
@@ -9,10 +9,14 @@
   "shutdown_after": 5,
   "ignore_below": 5.0,
   "cancel_after": 3,
-  "mean_fade_s": 90,
+  "mean_reset_s": 300,
+  "ask_sorry_every_s": 45,
   "order_hold_s": 60,
   "voice": "hera_f5",
   "fallback_voice": "af_heart",
   "voice_speed": 1.1,
-  "unknown": "Sorry i dont quite know that one yet"
+  "unknown": "Sorry i dont quite know that one yet",
+  "_initiative": "Her own initiative: after idle_s without anyone talking to her she takes the lead, at most every every_s: an apology from anyone in the red (each asked at most every sorry_every_s), else small talk with someone she likes / someone quiet / whoever is nearest the middle of the crowd (weights), or a roam (roam_chance; only when the game reports positions). Whoever she talks to can answer without her name for listen_s. A player's order keeps her for after_order_s.",
+  "initiative": {"on": true, "idle_s": 75, "every_s": 150, "listen_s": 20, "after_order_s": 120, "roam_chance": 0.25,
+                 "sorry_every_s": 90, "weights": {"liked": 0.4, "quiet": 0.35, "crowd": 0.25}}
 }

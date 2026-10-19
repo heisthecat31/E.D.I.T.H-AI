@@ -20,10 +20,21 @@ Companion -> brain (text JSON unless noted):
 Brain -> companion:
     {"t":"hi","name":"Edith","voice":"hera_f5","fallback":"af_heart","speed":1.1,"stt":bool,"tts":bool}
     {"t":"reply","say":"...","key":"<sha1 20>","alt":"<sha1 20>","parts":[[text,key,alt],...],
-     "face":[mood,seconds]|null,"orders":["come Bob","favour Ann",...],"how":"..."}
+     "face":[mood,seconds]|null,"orders":["come Bob","favour Ann",...],"how":"...","stream":true}
+        "stream": true (only present when true): the bank copy of this line is broken (revoice.json,
+        or its stream_all). The game must NOT play key/alt/parts from its voice banks; it asks for
+        the whole "say" with {"t":"render"} as for a line the pack lacks, and plays the EDV1 stream
+        (the server's Kokoro af_heart render, cached by text, so usually instant). Older games
+        ignore the field and play the bank copy.
     binary b"EDV1" + u32 id + int16 mono 24 kHz                     streamed render (Kokoro af_heart)
     {"t":"rendered","id":<n>,"ok":bool}
     {"t":"log","text":"..."}                                        what she heard / did, for its console
+
+Her orders (Satellite.dll / EDITH.dll) she sends of her own accord (her initiative, user 2026-10-19):
+    approach <name>       fly up to that player          } only when the state line reports
+    follow crowd          follow the middle of everyone  } players=<name>:x,y,z;<name>:x,y,z;...
+    roam                  free roam (her 2018 waypoints) }
+    come <name> + lookat 8 <name>                        the fallback without players= (older DLLs)
 
 Memory and points are kept per player name: Postgres (table edith_players) when DATABASE_URL is
 set, else JSON files in $DATA_DIR/edith_brain/players.
@@ -54,7 +65,8 @@ from typing import Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import PlainTextResponse
 
-from edith_mind import CHAT, OWNER, detect, post_webhook, system_prompt, tell_line, tidy
+from edith_barrier import Barrier
+from edith_mind import CHAT, OWNER, detect, opener_prompt, post_webhook, system_prompt, tell_line, tidy
 
 router = APIRouter()
 
@@ -62,7 +74,7 @@ HERE = Path(__file__).resolve().parent
 DATA = Path(os.environ.get("DATA_DIR", ".")) / "edith_brain"
 SEED = HERE / "edith_library"                                     # the library as deployed
 LIB_DIR = Path(os.environ.get("EDITH_LIBRARY") or (DATA / "library"))   # the live one (editable)
-LIB_FILES = ("config", "lines", "knowledge", "smalltalk", "reactions", "chat", "sentiment")
+LIB_FILES = ("config", "lines", "knowledge", "smalltalk", "reactions", "chat", "sentiment", "barrier", "revoice")
 DATABASE_URL = os.environ.get("DATABASE_URL")
 ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN")
 
@@ -83,9 +95,11 @@ DEFAULT_CFG = {
     "name": "Edith",
     "wake_words": ["edith", "edit", "edyth", "edeth", "eadith", "eddith", "editha", "edie", "eadie", "satellite"],
     "follow_up_seconds": 8, "react": True, "mean": True, "push_after": 2, "shutdown_after": 5,
-    "ignore_below": 5.0, "cancel_after": 3, "mean_fade_s": 90, "order_hold_s": 60,
+    "ignore_below": 5.0, "cancel_after": 3, "mean_reset_s": 300, "ask_sorry_every_s": 45, "order_hold_s": 60,
     "voice": "hera_f5", "fallback_voice": "af_heart", "voice_speed": 1.1,
     "unknown": "Sorry i dont quite know that one yet",
+    "initiative": {"on": True, "idle_s": 75, "every_s": 150, "listen_s": 20, "after_order_s": 120,
+                   "roam_chance": 0.25, "sorry_every_s": 90, "weights": {"liked": 0.4, "quiet": 0.35, "crowd": 0.25}},
 }
 
 STOP = set("""a an the is are was were be been am i you he she it we they me my your our their this that
@@ -166,6 +180,29 @@ class Library:
                 rf"\b(?:(not|never|isn'?t|aren'?t|ain'?t|no)\s+(?:\w+\s+)?)?"
                 rf"(?:(?:so|really|very|such|super|fucking|freaking|totally|absolutely|literally|kinda|actually) )*"
                 rf"(?:such a |a |an |the )?({ws})\b"), sign))
+        self.barrier = Barrier(files.get("barrier", {}))
+        rv = files.get("revoice", {})
+        self.stream_all = bool(rv.get("stream_all", False))
+        self.revoice = [e for e in rv.get("lines", []) if isinstance(e, dict) and (e.get("text") or e.get("key"))]
+        c = self.cfg
+        self.revoice_keys = set()
+        for e in self.revoice:                     # its keys as marked, and as the voice settings make them now
+            self.revoice_keys |= {e.get("key"), e.get("alt")} - {None, ""}
+            if e.get("text"):
+                self.revoice_keys |= {voice_key(c["voice"], c["voice_speed"], e["text"]),
+                                      voice_key(c["fallback_voice"], c["voice_speed"], e["text"])}
+
+    def must_stream(self, keys) -> bool:
+        """A reply with one of these keys streams the server's voice (revoice.json; user, 2026-10-19)."""
+        return self.stream_all or any(k in self.revoice_keys for k in keys)
+
+    def ini(self) -> dict:
+        """Her initiative settings (config.json "initiative", over the defaults)."""
+        out = dict(DEFAULT_CFG["initiative"])
+        got = self.cfg.get("initiative")
+        if isinstance(got, dict):
+            out.update(got)
+        return out
 
     def line(self, key: str, default: Optional[list] = None) -> list:
         return self.lines.get(key) or default or [""]
@@ -599,9 +636,10 @@ def auto_find(eid: str) -> Optional[dict]:
 
 class Person:
     """One player as she sees them: points (user, 2026-10-18; docs/networkplan.md "Who she listens
-    to"). Score = nice - mean; mean points fade (1 per mean_fade_s), nice ones are kept until
-    cancel_after bad things in a row wipe them. Points are saved with the player's record; the rest
-    (follow-up window, a stubborn ask, ...) lives while the server runs."""
+    to"). Score = nice - mean; nice points are kept until cancel_after bad things in a row wipe
+    them. Mean points reset fully after mean_reset_s (5 min) without a new bad act, or at once on a
+    real apology (user, 2026-10-19). Points are saved with the player's record; the rest (follow-up
+    window, a stubborn ask, ...) lives while the server runs."""
 
     def __init__(self, name: str):
         self.name = name
@@ -612,8 +650,9 @@ class Person:
         self.awake_until = 0.0
         self.asked, self.asked_at = "", 0.0
         self.last_snow = 0.0
+        self.asked_sorry_at = 0.0
 
-    nice = property(lambda s: s.pts["nice"], lambda s, v: s._set("nice", v))
+    nice =property(lambda s: s.pts["nice"], lambda s, v: s._set("nice", v))
     mean = property(lambda s: s.pts["mean"], lambda s, v: s._set("mean", v))
     streak = property(lambda s: s.pts["streak"], lambda s, v: s._set("streak", v))
 
@@ -623,10 +662,16 @@ class Person:
             store().mark(self.name)
 
     def _fade(self):
-        now = time.time()
-        fade = float(LIB.get().cfg.get("mean_fade_s", 90)) or 90.0
-        self.mean = max(0.0, self.mean - (now - self.pts.get("mean_at", now)) / fade)
-        self._set("mean_at", now)
+        """Mean points go all at once, mean_reset_s after the last bad act (mean_at)."""
+        if self.mean <= 0:
+            return
+        reset = float(LIB.get().cfg.get("mean_reset_s", 300) or 300)
+        if time.time() - self.pts.get("mean_at", 0) >= reset:
+            self.mean, self.streak, self.bad_acts = 0.0, 0, 0
+
+    def forgive(self):
+        """A real apology: mean points (and the bad streak) gone."""
+        self.mean, self.streak, self.bad_acts = 0.0, 0, 0
 
     def score(self) -> float:
         self._fade()
@@ -641,6 +686,7 @@ class Person:
     def bad(self, why: str, ed: "Edith", cancel_after: int = 3) -> bool:
         self._fade()
         self.mean += 1
+        self._set("mean_at", time.time())
         self.streak += 1
         wiped = self.streak >= cancel_after and self.nice > 0
         if wiped:
@@ -713,6 +759,39 @@ UNLEARN = re.compile(r"^(?:forget|unlearn) (?:what you say (?:to|when (?:i|someo
                      r"the answer (?:to|for)|your answer (?:to|for)) (.+)$", re.I)
 
 
+def parse_players(state: str) -> Dict[str, List[float]]:
+    """Everyone's position from a state line: players=<name>:x,y,z;<name>:x,y,z;... (EDITH.dll with
+    roam / approach). {} when the game doesn't report them yet."""
+    m = re.search(r"\bplayers=(\S*)", state)
+    out: Dict[str, List[float]] = {}
+    for item in (m.group(1).split(";") if m else []):
+        name, _, xyz = item.rpartition(":")
+        try:
+            pos = [float(v) for v in xyz.split(",")]
+        except ValueError:
+            continue
+        if name and len(pos) == 3 and all(math.isfinite(v) for v in pos):
+            out[name] = pos
+    return out
+
+
+SORRY = re.compile(r"\b(sorry|apologi[sz]e\w*|apologies|forgive me)\b")
+#: words that don't make "sorry" an apology: "oops sorry", "sorry lol", "my bad" (user, 2026-10-19)
+SORRY_FILLER = set("""sorry so oh ok okay hey uh um umm yo well oops whoops my bad fault lol haha lmao bro dude man
+mate please ah ahh sry soz""".split())
+
+
+def apology(text: str, named: bool) -> Optional[str]:
+    """"real": sorry said to her by name plus something more ("I'm really sorry Edith", "Edith,
+    I'm sorry for throwing you"); "bare": a sorry / my bad / oops without that; None: no apology.
+    `text` is the line without her name (strip_wake); `named`: her name was in it."""
+    t = norm(text)
+    if not re.search(r"\b(sorry|apologi[sz]e\w*|apologies|forgive me|my bad|oops|whoops|my fault|sry|soz)\b", t):
+        return None
+    more = [w for w in t.split() if w.strip("'") not in SORRY_FILLER]
+    return "real" if named and SORRY.search(t) and more else "bare"
+
+
 def instant(text: str):
     """A short line (up to 8 words) asking for an order -> order name; with two, the one said first."""
     t = text.lower().strip(" .!?,")
@@ -783,6 +862,13 @@ class Edith:
         self._face = None
         self.last_auto = None                                      # (self-learned answer id, when, who)
         self.spawned = False                                       # the DLL said you're in her lobby
+        # her own initiative: everyone's position from the state line (players=, EDITH.dll with roam),
+        # when someone last talked to her, when she last took the lead and with whom
+        self.positions: Dict[str, List[float]] = {}
+        self.her_pos: Optional[List[float]] = None
+        self.last_heard = time.time()
+        self.last_initiative = time.time()
+        self.opened = ("", 0.0)
 
     # -- plumbing --
     @property
@@ -831,9 +917,13 @@ class Edith:
         msg = {"t": "reply", "say": say, "orders": self._orders, "face": self._face, "how": how}
         if say:
             msg["key"], msg["alt"] = voice_key(v, sp, say), voice_key(fb, sp, say)
+            keys = [msg["key"], msg["alt"]]
             parts = sentences(say)
             if len(parts) > 1:
                 msg["parts"] = [[p, voice_key(v, sp, p), voice_key(fb, sp, p)] for p in parts]
+                keys += [k for part in msg["parts"] for k in part[1:]]
+            if self.lib.must_stream(keys):                             # a broken bank copy: the game
+                msg["stream"] = True                                   # streams the server's render
             self.speaking_until = time.time() + 30.0                   # till the companion says it's done
         self.sess.send(msg)
         self._orders, self._face = [], None
@@ -1035,8 +1125,16 @@ class Edith:
         line = line.replace("{time}", time.strftime("%I:%M %p", lt).lstrip("0"))
         return line.replace("{date}", time.strftime("%A, %B %d", lt).replace(" 0", " "))
 
+    def gate(self, say: str, how: str) -> str:
+        """The barrier's last word on any line of hers (edith_barrier.py): blocked, she says something else."""
+        why = self.lib.barrier.screen(say) if say else None
+        if not why:
+            return say
+        self.log(f"  barrier: blocked her line ({why}, {how}): {say[:80]!r}")
+        return say_clean(Library.pick(self.picks, "screened", self.lib.line("screened", ["Let's talk about something else."])))
+
     def speak(self, say: str, how: str, t_heard: Optional[float] = None):
-        say = say_clean(self.fill(say))
+        say = self.gate(say_clean(self.fill(say)), how)
         after = f", {time.time() - t_heard:.2f} s after they stopped" if t_heard else ""
         self.log(f"{self.cfg['name']} ({how}{after}): {say!r}")
         self.turn("her", say)
@@ -1046,8 +1144,9 @@ class Edith:
         """A reaction line: only when she isn't talking already."""
         if line and not self.busy():
             line = self.fill(line)
+            line = self.gate(say_clean(line), how)
             self.log(f"{self.cfg['name']} ({how}): {line!r}")
-            self.voice(say_clean(line), how)
+            self.voice(line, how)
 
     # -- Satellite.dll's lines (via the companion) --
     def read_state(self, line: str):
@@ -1064,12 +1163,16 @@ class Edith:
         self.members = [n for n in (m.group(1).split(",") if m else []) if n]
         m = re.search(r"\bai=(\S*)", line)
         self.with_ai = {n for n in (m.group(1).split(",") if m else []) if n}
+        self.positions = parse_players(line)
+        m = re.search(r"\bher=([-\d.]+),([-\d.]+),([-\d.]+)", line)
+        self.her_pos = [float(m.group(i)) for i in (1, 2, 3)] if m else None
 
     def on_dll(self, msg: str):
         """A line from Satellite.dll's event port (ai/satellite_ai.py listen_events)."""
         if msg.startswith("state "):
             self.read_state(msg[6:])
             self.tell_favourite()
+            self.initiative()
         elif msg.startswith("mute "):                                  # "mute 0|1 me=<name> speaker=0|1"
             m = re.search(r"\bme=(\S+)", msg)                          # (your client says who you are: a
             if m and m.group(1) != self.me:                            #  server's state lines don't know)
@@ -1116,6 +1219,8 @@ class Edith:
         if self.judge_act(react or "", who):
             return
         if react and c.get("react", True) and not self.busy() and time.time() > self.quiet_until:
+            if react in ("thrown", "headbutt", "grabbed", "bumped") and self.sorry_due(self.person(who)):
+                return self.aside(Library.pick(self.picks, "ask_sorry", lib.line("ask_sorry")), f"{react}: asks for an apology")
             line = lib.reaction(self, react, self.count_today(self.as_who(remember, who)))
             self.aside(line or "", f"reacts to {react}")
 
@@ -1211,7 +1316,8 @@ class Edith:
                 return None, Library.pick(self.picks, "grudging", lib.line("grudging"))
             p.asked, p.asked_at = order, now
             self.log(f"  stubborn with {p.name} ({sc:+.1f}): ask again")
-            return Library.pick(self.picks, "stubborn", lib.line("stubborn")), None
+            key = "ask_sorry" if self.sorry_due(p) else "stubborn"
+            return Library.pick(self.picks, key, lib.line(key)), None
         return None, None
 
     def obey(self, who: Optional[str]):
@@ -1376,6 +1482,10 @@ class Edith:
         """Teaching her (the player whose game runs her): see satellite_ai.py teach_instant()."""
         lib = self.lib
         t = re.sub(r"^(?:(?:cubie|edith),?\s*|hey\s+|okay\s+|ok\s+|so\s+)+", "", heard.strip(), flags=re.I).strip(" .!?")
+        m = TEACH.match(t) or ANSWER.match(t)
+        if m and (lib.barrier.screen(m.group(m.lastindex)) or lib.barrier.check_in(m.group(1))):
+            self.log("  barrier: won't learn that")
+            return Library.pick(self.picks, "refuse_bigot", lib.line("refuse_bigot"))
         m = TEACH.match(t)
         if m:
             self.teach(m.group(1), m.group(2))
@@ -1426,18 +1536,50 @@ class Edith:
             self.face("angry", 8)
             return self.speak(pick("mean_back") if wiped else (line or pick("mean_reply")), "mean back (snowball)", t_heard)
         self.face("annoyed", 6)
+        if not overheard and self.sorry_due(p):                        # in the red: she wants an apology
+            line = f"{line} {pick('ask_sorry')}" if line else pick("ask_sorry")
+            return self.speak(line, "mean words, asks for an apology", t_heard)
         return self.speak(line or pick("overheard_mean" if overheard else "mean_reply"), "mean words", t_heard)
 
-    def handle(self, heard: str, t_heard: float, who: Optional[str] = None):
+    def sorry_due(self, p: Person) -> bool:
+        """In the red and not asked for an apology lately (she asks, never naming them)."""
+        if p.score() >= 0 or p.mean <= 0 or time.time() - p.asked_sorry_at < float(self.cfg.get("ask_sorry_every_s", 45)):
+            return False
+        p.asked_sorry_at = time.time()
+        return True
+
+    def handle(self, heard: str, t_heard: float, who: Optional[str] = None, named: bool = False):
         """What `who` said to her (see satellite_ai.py handle()). Teaching and places are the
-        player's whose game runs her; everyone has their own profile."""
+        player's whose game runs her; everyone has their own profile. `named`: her name was said
+        (it's already taken out of `heard`)."""
         c, lib = self.cfg, self.lib
         me = self.is_me(who)
         p = self.person(who)
-        p.last_spoke = time.time()
+        p.last_spoke = self.last_heard = time.time()
         self.log(f"{'you' if me else p.name}:", heard)
         self.turn("player" if me else p.name, heard)
         said = lambda text: self.event(self.as_who(text, who))
+        pick = lambda k: Library.pick(self.picks, k, lib.line(k))
+
+        bar = lib.barrier.check_in(heard)                              # racist / sexist: refused, and mean
+        if bar:
+            self.log(f"  barrier: {p.name} ({bar})")
+            return self.remark(who, -1, heard, t_heard, pick("refuse_slur" if bar == "slur" else "refuse_bigot"))
+        sorry = apology(heard, named)
+        if sorry and (sorry == "real" or p.mean > 0):
+            said(f"you said \"{heard[:60]}\"")
+            if sorry == "bare":                                        # "sorry", "my bad", "oops": nothing
+                self.face("annoyed", 3)
+                self.log(f"  {p.name}: not a real apology (mean {p.mean:.1f} stays)")
+                return self.speak(pick("sorry_mean_it"), "apology, not meant", t_heard)
+            if p.mean <= 0:
+                return self.speak(pick("sorry_nothing"), "apology, nothing to forgive", t_heard)
+            p.forgive()
+            p.asked_sorry_at = 0.0
+            self.face("happy", 4)
+            self.log(f"  {p.name} apologised: mean points reset, score {p.score():+.1f}")
+            self.tell_favourite()
+            return self.speak(pick("sorry_accepted"), "apology accepted", t_heard)
 
         def order(text: str, how: str, do, line: str, undo=None):
             # stopping is a brake, never refused: however mean someone was, "stop" stops her (user)
@@ -1514,10 +1656,6 @@ class Edith:
         if st:
             if st[0] == "be_quiet" and me:
                 self.quiet_until = time.time() + 120
-            if st[0] == "sorry":
-                p.mean = max(0.0, p.mean - 1)
-                self.log(f"  {p.name} said sorry: score {p.score():+.1f}")
-                self.tell_favourite()
             said(f"you said \"{heard[:60]}\"")
             return self.speak(st[1], f"small talk {st[0]}", t_heard)
         ch = lib.chat(self.picks, heard)
@@ -1535,6 +1673,11 @@ class Edith:
         if au:
             score, aid, line, o = au
             e = auto_find(aid)
+            if e and lib.barrier.screen(line):                         # (learned before the barrier)
+                self_rec()["auto"].remove(e)
+                auto_changed()
+                self.log(f"  barrier: dropped {aid}: {line[:60]!r}")
+                e, line, o = None, pick("screened"), ""
             if e:
                 e["uses"] = e.get("uses", 0) + 1
                 store().mark(SELF)
@@ -1594,6 +1737,11 @@ class Edith:
         if self.sess.closed:
             return
         line, act = tidy(text) if text else ("", None)
+        line = self.unname(line)
+        blocked = self.lib.barrier.screen(line) if line else None
+        if blocked:                                                    # never said, never kept
+            self.log(f"  barrier: chat model reply blocked ({blocked}): {line[:80]!r}")
+            line, act = Library.pick(self.picks, "screened", self.lib.line("screened")), None
         if not line:
             line = pick("nod") if not is_question(heard) and len(heard.split()) > 5 else self.cfg["unknown"]
             self.speak(line, "chat model gave nothing", t_heard)
@@ -1609,10 +1757,19 @@ class Edith:
                 self.carry_out([act], who=who)
                 refused = bool(grumble)                                # (a grumble is about this player)
                 line = grumble or line
-        if not refused and not no_learn(line, who, self.me, self.members):
+        if not refused and not blocked and not no_learn(line, who, self.me, self.members):
             self.learn_auto(heard, line, act, who)
         self.speak(line, f"chat model {CHAT.last_ms} ms{' + ' + act if act else ''}", t_heard)
         self.flush()
+
+    def unname(self, line: str) -> str:
+        """Her chat model's line without anyone's name in it (she never says names, user 2026-10-18)."""
+        names = {n for n in list(self.members) + list(self.positions) + [self.me] if n and n != "you" and len(n) >= 3}
+        for n in sorted(names, key=len, reverse=True):
+            for form in {n, n.replace("_", " ")}:
+                line = re.sub(rf"\s*,?\s*\b{re.escape(form)}\b", "", line, flags=re.I)   # "Hey Ann, do" -> "Hey, do"
+        line = re.sub(r",\s*([.!?])", r"\1", re.sub(r"\s+([.,!?])", r"\1", re.sub(r"\s+", " ", line))).strip(" ,")
+        return line[:1].upper() + line[1:]
 
     def learn_auto(self, heard: str, line: str, act: Optional[str], who: Optional[str]):
         """Her chat model's answer, kept: the same question next time is instant (and so is its voice)."""
@@ -1647,6 +1804,110 @@ class Edith:
             self_rec()["auto"].remove(e)
             auto_changed()
             self.log(f"  dropped {e['id']} (told off): {e['q'][0][:40]!r} -> {e['a'][0]!r}")
+
+    # -- her own initiative (user, 2026-10-19) --
+    def initiative(self):
+        """On each state line: when nobody has talked to her for idle_s, she picks someone and goes
+        to them (an apology first from anyone in the red; else someone she likes, someone quiet, or
+        the middle of the crowd) and opens small talk; or she roams. Orders (EDITH.dll):
+            approach <name> | follow crowd | roam      when the state line has players= (positions)
+            come <name>                                 the fallback without it (older EDITH.dll)
+        Only the host's (or a solo) Edith decides; a player's order holds her for after_order_s."""
+        ini = self.lib.ini()
+        now = time.time()
+        if not ini.get("on", True) or self.role == "puppet" or not self.me or not self.in_lobby():
+            return
+        if self.busy() or now < self.quiet_until or now - self.last_heard < float(ini["idle_s"]) \
+                or now - self.last_initiative < float(ini["every_s"]):
+            return
+        if self.order_by and now - self.order_at < float(ini["after_order_s"]):
+            return
+        self.last_initiative = now
+        pos = self.positions
+        people = [n for n in (pos or self.members or [self.me]) if n and n != "you" and self.modded(n)]
+        if not people:
+            return
+        listen = float(ini["listen_s"])
+
+        def go(name: str, mode: str):
+            self.order(f"approach {name}" if pos else f"come {name}")
+            if not pos:
+                self.order(f"lookat 8 {name}")
+            self.opened = (name, now)
+            self.person(name).awake_until = now + listen                # they can answer without her name
+            self.log(f"initiative: {mode} -> {name} ({self.score(name):+.1f})")
+
+        red = [n for n in people if self.score(n) < 0 and self.person(n).mean > 0
+               and now - self.person(n).asked_sorry_at >= float(ini["sorry_every_s"])]
+        if red:                                                        # in the red: an apology, please
+            name = min(red, key=self.score)
+            self.person(name).asked_sorry_at = now
+            go(name, "wants an apology")
+            self.face("annoyed", 4)
+            return self.speak(Library.pick(self.picks, "ask_sorry", self.lib.line("ask_sorry")), "initiative: apology")
+        friends = [n for n in people if self.score(n) >= 0]
+        if pos and (not friends or random.random() < float(ini["roam_chance"])):
+            self.order("roam")
+            self.log("initiative: roam")
+            return
+        if not friends:
+            return
+        w = dict(ini.get("weights") or {})
+        liked = [n for n in friends if self.score(n) > 0]
+        modes = {"liked": bool(liked), "quiet": True, "crowd": len(pos) >= 3}
+        choices = [m for m in modes if modes[m] and float(w.get(m, 0)) > 0] or ["quiet"]
+        mode = random.choices(choices, [float(w.get(m, 1)) or 1.0 for m in choices])[0]
+        if mode == "liked":
+            top = max(self.score(n) for n in liked)
+            name = random.choice([n for n in liked if self.score(n) >= top - 0.5])
+        elif mode == "crowd":                                          # the middle of everyone (mod or not)
+            mid = [sum(v[i] for v in pos.values()) / len(pos) for i in range(3)]
+            name = min((n for n in friends if n in pos), key=lambda n: math.dist(pos[n], mid), default=friends[0])
+        else:                                                          # whoever talked to her least lately
+            oldest = min(self.person(n).last_spoke for n in friends)
+            name = random.choice([n for n in friends if self.person(n).last_spoke <= oldest + 30])
+        if mode == "crowd":
+            self.order("follow crowd")
+            self.opened = (name, now)
+            self.person(name).awake_until = now + listen
+            self.log(f"initiative: crowd (talks to {name}, nearest the middle)")
+        else:
+            go(name, mode)
+        self.open_talk(name, mode)
+
+    def open_talk(self, who: str, why: str):
+        """Small talk she starts: her chat model with what she knows about them, else a stock opener."""
+        pr = self.prof(who)
+        likes = pr.get("likes") or []
+        if likes:
+            stock = Library.pick(self.picks, "opener_like", self.lib.line("opener_like")).replace("{thing}", random.choice(likes[-3:]))
+        else:
+            stock = Library.pick(self.picks, "opener", self.lib.line("opener"))
+        if CHAT.tried and CHAT.llm is None:
+            return self.speak(stock, f"initiative: {why}, small talk")
+        about = [f"likes {x}" for x in likes[-3:]] + [f"doesn't like {x}" for x in pr["dislikes"][-2:]]
+        about += [f"favorite {k} is {v}" for k, v in list(pr["favorites"].items())[-2:]] + pr["notes"][-2:]
+        system = opener_prompt(who, about, [m for m in self.members if m != who])
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            return self.speak(stock, f"initiative: {why}, small talk")
+        self.log("  thinking of something to say (chat model)...")
+        loop.create_task(self._open(system, who, why, stock, time.time()))
+
+    async def _open(self, system: str, who: str, why: str, stock: str, t0: float):
+        try:
+            text = await asyncio.wait_for(asyncio.to_thread(CHAT.reply, system, [], "(You start the conversation.)"), 15.0)
+        except Exception as e:  # noqa: BLE001
+            self.log(f"  chat model failed: {type(e).__name__} {e}"[:200])
+            text = None
+        if self.sess.closed or self.last_heard > t0 or self.busy():      # someone talked to her meanwhile
+            return
+        line = self.unname(tidy(text)[0]) if text else ""
+        if not line or self.lib.barrier.screen(line):
+            line = stock
+        self.speak(line, f"initiative: {why}, small talk ({CHAT.last_ms} ms)")
+        self.flush()
 
     # -- reports for her owner (edith_mind.py) --
     def check_report(self, text: str, who: Optional[str]):
@@ -1760,7 +2021,7 @@ class Edith:
         speaker = p.name if who else self.me                   # she turns to whoever talks to her, whatever
         if speaker and speaker != "you":                       # their score (user, 2026-10-18)
             self.order(f"lookat 6 {speaker}")
-        self.handle(cmd, t_heard, who)
+        self.handle(cmd, t_heard, who, named)
         self.flush()
 
 
@@ -2020,7 +2281,8 @@ def _text(s: Session, msg: dict):
     elif t == "text":
         text = str(msg.get("text") or "").strip()
         if text:
-            ed.handle(strip_wake(ed.cfg, text) or text, time.time(), msg.get("who") or None)
+            cmd = strip_wake(ed.cfg, text)
+            ed.handle(cmd or text, time.time(), msg.get("who") or None, cmd is not None)
             ed.flush()
     elif t == "speaking":
         ed.speaking_until = time.time() + 30.0 if msg.get("on") else 0.0
@@ -2152,6 +2414,143 @@ async def library_put(name: str, request: Request, token: Optional[str] = None):
     LIB.checked = 0.0
     LIB.get()
     return {"ok": True, "error": LIB.error}
+
+
+def _write_lib(name: str, data: dict):
+    tmp = LIB_DIR / f"{name}.json.tmp"
+    tmp.write_text(json.dumps(data, indent=1, ensure_ascii=False), encoding="utf-8")
+    tmp.replace(LIB_DIR / f"{name}.json")
+    LIB.checked = 0.0
+    LIB.get()
+
+
+def _stock_lines(lib: Library) -> Dict[str, str]:
+    """Every stock line as the game hears it (names out, her name in) -> keyed by its pack keys."""
+    c = lib.cfg
+    out: Dict[str, str] = {}
+    for raw in lib.all_lines():
+        t = say_clean(drop_name(raw).replace("{me}", c["name"]))
+        for part in [t] + (sentences(t) if len(sentences(t)) > 1 else []):
+            out.setdefault(voice_key(c["voice"], c["voice_speed"], part), part)
+            out.setdefault(voice_key(c["fallback_voice"], c["voice_speed"], part), part)
+    return out
+
+
+def _rendered(text: str) -> bool:
+    c = LIB.get().cfg
+    return all((MOUTH.cache / f"{voice_key(c['fallback_voice'], c['voice_speed'], p)}.pcm").exists()
+               for p in sentences(text) or [text])
+
+
+_prerender = {"running": False, "done": 0, "failed": [], "at": ""}
+
+
+def _prerender_run(texts: list):
+    """Kokoro renders of re-voiced lines, cached (per sentence, as the game asks for them)."""
+    _prerender.update(running=True, done=0, failed=[], at=time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
+    try:
+        for text in texts:
+            try:
+                for part in sentences(text) or [text]:
+                    MOUTH.render(part)
+                _prerender["done"] += 1
+            except Exception as e:  # noqa: BLE001
+                _prerender["failed"].append(f"{text[:60]}: {type(e).__name__}: {e}"[:200])
+    finally:
+        _prerender["running"] = False
+        log(f"revoice: pre-rendered {_prerender['done']}/{len(texts)}")
+
+
+def _prerender_start(texts: list) -> bool:
+    if _prerender["running"] or not texts:
+        return False
+    threading.Thread(target=_prerender_run, args=(list(texts),), daemon=True).start()
+    return True
+
+
+@router.get("/edith/brain/revoice")
+async def revoice_get(request: Request, token: Optional[str] = None):
+    """The re-voiced lines (bank copy broken: the game streams the server's render), each with
+    whether its render is cached."""
+    _admin(request, token)
+    lib = LIB.get()
+    return {"stream_all": lib.stream_all, "prerender": _prerender,
+            "lines": [dict(e, rendered=_rendered(e["text"]) if e.get("text") else False) for e in lib.revoice]}
+
+
+@router.post("/edith/brain/revoice")
+async def revoice_add(request: Request, token: Optional[str] = None):
+    """Mark a line broken: {"text": "..."} or {"key": "<pack key or alt>"} (a stock line's), optional
+    "why"; {"stream_all": true|false} switches every line to streaming. Its render starts at once."""
+    _admin(request, token)
+    try:
+        body = json.loads(await request.body() or b"{}")
+        assert isinstance(body, dict)
+    except Exception:  # noqa: BLE001
+        raise HTTPException(status_code=400, detail="a JSON object")
+    lib = LIB.get()
+    data = json.loads((LIB_DIR / "revoice.json").read_text(encoding="utf-8")) if (LIB_DIR / "revoice.json").exists() \
+        else {"stream_all": False, "lines": []}
+    data.setdefault("lines", [])
+    if "stream_all" in body:
+        data["stream_all"] = bool(body["stream_all"])
+    entry = None
+    text, key = str(body.get("text") or "").strip(), str(body.get("key") or "").strip().lower()
+    if key and not text:
+        text = _stock_lines(lib).get(key, "")
+        if not text:
+            raise HTTPException(status_code=404, detail="no stock line has that key: send its text")
+    if text:
+        text = say_clean(text)
+        c = lib.cfg
+        entry = {"text": text, "key": voice_key(c["voice"], c["voice_speed"], text),
+                 "alt": voice_key(c["fallback_voice"], c["voice_speed"], text),
+                 "why": str(body.get("why") or "")[:200], "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime())}
+        data["lines"] = [e for e in data["lines"] if e.get("text") != text] + [entry]
+    _write_lib("revoice", data)
+    rendering = _prerender_start([entry["text"]]) if entry and body.get("render", True) else False
+    return {"ok": True, "line": entry, "stream_all": data.get("stream_all", False), "rendering": rendering,
+            "error": LIB.error}
+
+
+@router.delete("/edith/brain/revoice/{key}")
+async def revoice_delete(key: str, request: Request, token: Optional[str] = None):
+    """Unmark a line (by its key, alt, or exact text): the bank copy plays again."""
+    _admin(request, token)
+    data = json.loads((LIB_DIR / "revoice.json").read_text(encoding="utf-8"))
+    lines = data.get("lines", [])
+    keep = [e for e in lines if key not in (e.get("key"), e.get("alt"), e.get("text"))]
+    if len(keep) == len(lines):
+        raise HTTPException(status_code=404, detail="not on the list")
+    data["lines"] = keep
+    _write_lib("revoice", data)
+    return {"ok": True, "removed": len(lines) - len(keep)}
+
+
+@router.post("/edith/brain/revoice/render")
+async def revoice_render(request: Request, token: Optional[str] = None):
+    """Pre-render every re-voiced line whose render isn't cached yet. Runs in the background;
+    GET /edith/brain/revoice shows the progress."""
+    _admin(request, token)
+    todo = [e["text"] for e in LIB.get().revoice if e.get("text") and not _rendered(e["text"])]
+    return {"ok": True, "queued": len(todo) if _prerender_start(todo) else 0, "busy": _prerender["running"]}
+
+
+@router.get("/edith/brain/lines")
+async def brain_lines(request: Request, token: Optional[str] = None, q: str = ""):
+    """Her stock lines with their pack keys (key: main voice, alt: fallback), to find a broken one."""
+    _admin(request, token)
+    lib = LIB.get()
+    c = lib.cfg
+    seen, out = set(), []
+    for t in _stock_lines(lib).values():
+        if t in seen or (q and q.lower() not in t.lower()):
+            continue
+        seen.add(t)
+        out.append({"text": t, "key": voice_key(c["voice"], c["voice_speed"], t),
+                    "alt": voice_key(c["fallback_voice"], c["voice_speed"], t),
+                    "revoiced": lib.must_stream([voice_key(c["voice"], c["voice_speed"], t)])})
+    return out[:500]
 
 
 @router.get("/edith/brain/unknown", response_class=PlainTextResponse)

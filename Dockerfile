@@ -14,7 +14,7 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY edith_app.py edith_brain.py edith_mind.py edith_relay.py ./
+COPY edith_app.py edith_brain.py edith_barrier.py edith_mind.py edith_relay.py ./
 COPY edith_library ./edith_library
 
 EXPOSE 8000

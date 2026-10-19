@@ -45,6 +45,10 @@ class Chat:
 
     def load(self):
         self.tried = True
+        if os.environ.get("EDITH_CHAT_FAKE"):                          # tests: canned replies, no model
+            self.llm = FakeLLM(os.environ["EDITH_CHAT_FAKE"])
+            log("chat: fake replies from", os.environ["EDITH_CHAT_FAKE"])
+            return
         if os.environ.get("EDITH_CHAT", "1") == "0":
             self.error = "off (EDITH_CHAT=0)"
             return
@@ -83,6 +87,23 @@ class Chat:
         return text or None
 
 
+class FakeLLM:
+    """EDITH_CHAT_FAKE=<file.json>: {"substring of the player's line": "reply", ...}, "*" the default.
+    For tools/test_brain.py on a machine without llama.cpp."""
+
+    def __init__(self, path: str):
+        import json
+        try:
+            self.replies = json.loads(Path(path).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            self.replies = {}
+
+    def create_chat_completion(self, messages, **_):
+        heard = messages[-1]["content"].lower()
+        text = next((r for k, r in self.replies.items() if k != "*" and k.lower() in heard), self.replies.get("*", "Hmm."))
+        return {"choices": [{"message": {"content": text}}]}
+
+
 CHAT = Chat()
 
 
@@ -92,7 +113,8 @@ def system_prompt(speaker: str, about: List[str], members: List[str], facts: Lis
         "You are Edith, a small floating satellite robot in the Echo VR lobby (the Echo Construct). "
         "You are the new AI of the Echo Construct: playful, cheeky, a bit sassy, kind to people who are kind to you.",
         "You talk out loud, so answer in ONE or TWO short spoken sentences, under 25 words. No emoji, no lists, "
-        "no symbols, no stage directions. Never say the word 'coming' (say 'on my way').",
+        "no symbols, no stage directions. Never say the word 'coming' (say 'on my way'). Never say anyone's name. "
+        "Never tell racist or sexist jokes or say anything hateful about any group: refuse in a few words.",
         "If you don't know something, make a light guess or a joke instead of saying you don't understand.",
         "If the player asks you to do something you can do, end your line with one tag: "
         "[do: come], [do: follow], [do: home], [do: stay], [do: spin], [do: flip] or [do: throw] (a snowball).",
@@ -105,6 +127,13 @@ def system_prompt(speaker: str, about: List[str], members: List[str], facts: Lis
     if members:
         lines.append("Players near you: " + ", ".join(members[:8]) + ".")
     return "\n".join(lines)
+
+
+def opener_prompt(speaker: str, about: List[str], members: List[str]) -> str:
+    """She starts the talk (her initiative): one friendly line for someone near her."""
+    return system_prompt(speaker, about, members, []) + (
+        "\nNobody has talked to you for a while, so you start. Say ONE short friendly line to this player: "
+        "a question about them or something they like, or a playful remark. Under 20 words. No action tags.")
 
 
 def tidy(text: str):
