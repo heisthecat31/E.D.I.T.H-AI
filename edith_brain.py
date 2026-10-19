@@ -1189,6 +1189,12 @@ class Edith:
                 self.on_heard(parts[1], parts[0], time.time())
         elif msg.startswith("event "):
             self.on_event(msg[6:])
+        elif msg.startswith("error "):                                 # "error no player <name>" (approach)
+            self.log("game error:", msg[6:])
+            m = re.match(r"error no player (\S+)", msg)
+            if m and self.opened[0] == m.group(1):
+                self.opened = ("", 0.0)
+                self.last_initiative = 0.0                             # pick someone else next state line
         elif msg == "spawned":                                         # you're in her lobby (EDITH.dll)
             self.spawned = True
             self.tell_reports()
@@ -1198,8 +1204,15 @@ class Edith:
         c, lib = self.cfg, self.lib
         m = re.search(r"\s+by=(\S*)", text)
         who = (m.group(1) or None) if m else None
+        m = re.search(r"\s+to=(\S*)", text)
+        to = m.group(1) if m else ""
         text = re.sub(r"\s+(?:by|to)=\S*", "", text).strip()
-        self.log("game:", text, f"(by {who})" if who else "")
+        self.log("game:", text, f"(by {who})" if who else "", f"(to {to})" if to else "")
+        if text == "approached" or text.startswith("lost "):          # her approach (initiative): arrived /
+            target = to or text[5:].strip()                            # the player left before she got there
+            if text != "approached" and self.opened[0] == target:
+                self.opened = ("", 0.0)
+            return
         if not self.modded(who):                                       # someone without the mod bumped her
             self.log(f"  ({who} doesn't run E.D.I.T.H: ignored)")
             return

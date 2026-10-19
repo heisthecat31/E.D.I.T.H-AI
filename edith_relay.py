@@ -26,6 +26,9 @@ Every player running Satellite.dll keeps one WebSocket open here:
    - text {"t": "voice"|"snow"|"face", ...} from the host -> everyone else
    - text {"t": "ctl", "to": "<name>", ...} from the host -> that player only
    - text {"t": "touch"|"heard", ...} from anyone -> the host only
+   - text {"t": "ball", "k": <0-15>, "pos": [x,y,z], "vel": [x,y,z], "held": 0|1} from any member
+     (whoever holds one of her balls: 15/s while held, once more on release) -> everyone else.
+     Its own limit (MAX_BALLS_PER_SEC), apart from the other text messages' MAX_EVENTS_PER_SEC.
    Text arrives as the same JSON with "from": "<sender>" added.
 
 Nothing is stored. A name can only be held by one connection; the newest wins.
@@ -50,10 +53,12 @@ MAX_BINARY = 2048
 MAX_STATE_PER_SEC = 40      # the plugin sends 20
 MAX_PCM_PER_SEC = 80        # 20 ms chunks: 50/s while she talks
 MAX_EVENTS_PER_SEC = 20
+MAX_BALLS_PER_SEC = 30      # the plugin sends 15 while a ball is held
 MAX_HELLOS_PER_MIN = 60
 SEND_QUEUE = 64             # messages buffered per receiver before old ones are dropped
 HOST_TO_GROUP = {"voice", "snow", "face"}
 TO_HOST = {"touch", "heard"}
+ANY_TO_GROUP = {"ball"}
 
 
 class Client:
@@ -191,7 +196,7 @@ def _route_text(client: Client, msg: dict) -> None:
     host = _host(group)
     msg["from"] = client.name
     out = json.dumps(msg, separators=(",", ":"))
-    if t in HOST_TO_GROUP and client is host:
+    if t in ANY_TO_GROUP or (t in HOST_TO_GROUP and client is host):
         for peer in group:
             if peer is not client:
                 peer.offer(out)
@@ -249,6 +254,9 @@ async def edith_ws(ws: WebSocket):
                 if data.get("t") == "hello":
                     if client.rate_ok("hello", MAX_HELLOS_PER_MIN, 60.0):
                         _hello(client, data)
+                elif data.get("t") in ANY_TO_GROUP:
+                    if client.name and client.rate_ok("ball", MAX_BALLS_PER_SEC, 1.0):
+                        _route_text(client, data)
                 elif client.name and client.rate_ok("events", MAX_EVENTS_PER_SEC, 1.0):
                     _route_text(client, data)
                 continue

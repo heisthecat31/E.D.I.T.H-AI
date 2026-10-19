@@ -230,6 +230,11 @@ async def main():
         got = await drain(2, 0)
         check(any("roam" in g.get("orders", []) for g in got), "roam (roam_chance 1)")
         api("PUT", "library/config", config)                            # her settings back as they were
+        for line in ("event approached to=Ann", "event lost Ann", "error no player Ghost"):   # EDITH.dll's answers
+            await state()
+            await send({"t": "dll", "line": line})
+            got = await drain(1, 0)
+            check(not any(g.get("say") for g in got), f"{line!r}: taken quietly (no line, no reaction)")
 
         # -- 5. reports and the owner's spawn (as before) ------------------------------------------------
         print("\n== reports")
