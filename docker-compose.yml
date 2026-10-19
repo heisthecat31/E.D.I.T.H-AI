@@ -1,0 +1,42 @@
+# E.D.I.T.H's server. From this folder:
+#   docker compose up -d --build                       Edith only, on 127.0.0.1:8000 (testing)
+#   docker compose --profile caddy up -d --build       + HTTPS on a public IP (EDITH_HOST in .env)
+#   docker compose --profile tunnel up -d --build      + Cloudflare Tunnel (TUNNEL_TOKEN in .env)
+# Her data (models, memory, library, learned answers, reports) lives in the edith-data volume.
+services:
+  edith:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - edith-data:/data
+    ports:
+      - "127.0.0.1:8000:8000"
+    mem_limit: 6g
+
+  caddy:
+    image: caddy:2
+    profiles: ["caddy"]
+    restart: unless-stopped
+    depends_on: [edith]
+    env_file: .env
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    profiles: ["tunnel"]
+    restart: unless-stopped
+    depends_on: [edith]
+    env_file: .env
+    command: tunnel --no-autoupdate run
+
+volumes:
+  edith-data:
+  caddy-data:

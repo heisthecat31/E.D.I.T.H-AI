@@ -1,0 +1,5 @@
+# HTTPS for Edith on a public IP: EDITH_HOST (in .env) must point at this machine, ports 80 and 443 open.
+# Caddy gets the certificate itself and passes WebSockets through.
+{$EDITH_HOST} {
+	reverse_proxy edith:8000
+}

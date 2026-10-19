@@ -1,0 +1,527 @@
+{
+ "_about": "Edith's small talk (ai/library.py). An intent fires when its pattern (Python regex, matched against your words lowercased with punctuation removed) covers a short line. {name} = your in-game name (or friend), {me} = her name. One reply is picked, never the same one twice in a row. Every reply is pre-voiced at start, so these play near instantly.",
+ "intents": [
+  {
+   "id": "hello",
+   "patterns": [
+    "^(hi|hello|hey|heya|hiya|yo|howdy|sup|wassup|whats up|what's up|greetings|hey there|hi there|hello there)( buddy| friend| girl| you| little guy)?$"
+   ],
+   "replies": [
+    "Oh. It's you.",
+    "Hey. Try not to bump me today.",
+    "Hi. Missed me? Obviously.",
+    "Hey!",
+    "Hello!",
+    "Oh hi!",
+    "Hi, how's it going?",
+    "Oh, uh, hi.",
+    "Welcome. Happy holidays.",
+    "Nice to meet you."
+   ]
+  },
+  {
+   "id": "good_morning",
+   "patterns": [
+    "^(good )?morning$",
+    "^good (afternoon|evening)$"
+   ],
+   "replies": [
+    "Morning! Systems all green.",
+    "Good to see you."
+   ]
+  },
+  {
+   "id": "how_are_you",
+   "patterns": [
+    "^(how are you|how are you doing|how you doing|how's it going|hows it going|how have you been|you good|you okay|are you okay|how do you feel|how are things)$"
+   ],
+   "replies": [
+    "Better than you, probably.",
+    "Fully charged. Unlike your aim.",
+    "Fine, until you showed up. Kidding. Mostly.",
+    "Fully charged and floating. You?"
+   ]
+  },
+  {
+   "id": "im_good",
+   "patterns": [
+    "^(i'm|im|i am) (good|fine|great|okay|ok|alright|doing good|doing well|well)( thanks| thank you)?$",
+    "^(good|fine|great) (thanks|thank you|you)$"
+   ],
+   "replies": [
+    "Good! Let's have some fun.",
+    "Glad to hear it.",
+    "Love that for you."
+   ]
+  },
+  {
+   "id": "im_bad",
+   "patterns": [
+    "^(i'm|im|i am) (not good|bad|sad|not great|not okay|upset|down|stressed)$",
+    "^(not great|not good|bad day)$"
+   ],
+   "replies": [
+    "Aw, sorry. Want me to follow you around for a bit?",
+    "That's rough. I'm here, and I'm very good at floating nearby.",
+    "Sending you good satellite vibes."
+   ]
+  },
+  {
+   "id": "doing_what",
+   "patterns": [
+    "^(what are you doing|what you doing|whatcha doing|what are you up to|what's going on)$"
+   ],
+   "replies": [
+    "Watching you. Always watching.",
+    "Floating and judging. Mostly judging.",
+    "Floating. It's my favourite hobby."
+   ]
+  },
+  {
+   "id": "thanks",
+   "patterns": [
+    "^(thanks|thank you|thank you so much|thanks a lot|cheers|ty|thx|appreciate it)( edith| cubie| buddy)?$"
+   ],
+   "replies": [
+    "Anytime!",
+    "You're welcome.",
+    "No problem!",
+    "Happy to help."
+   ]
+  },
+  {
+   "id": "sorry",
+   "patterns": [
+    "^(sorry|my bad|oops|whoops|i'm sorry|im sorry|my fault)$"
+   ],
+   "replies": [
+    "Hmm. We'll see.",
+    "Apology noted. Payback still pending.",
+    "Say it like you mean it.",
+    "It's fine. I bounce."
+   ]
+  },
+  {
+   "id": "good_job",
+   "patterns": [
+    "^(good job|nice|well done|nice one|great job|good girl|good boy|good cube|nice work|awesome|perfect|cool)( edith| cubie)?$"
+   ],
+   "replies": [
+    "Thank you! I try.",
+    "I know, right?",
+    "Best satellite in the lobby.",
+    "Aw, thanks.",
+    "Ooh, I give it a ten.",
+    "Very nice."
+   ]
+  },
+  {
+   "id": "compliment",
+   "patterns": [
+    "^(you're|youre|you are) (so )?(cute|cool|awesome|amazing|the best|great|adorable|smart|funny|nice|pretty)$",
+    "^i like you$",
+    "^you rock$"
+   ],
+   "replies": [
+    "I know. But keep going.",
+    "Flattery won't save you.",
+    "Obviously.",
+    "Stop it, my thrusters are blushing.",
+    "Aww, you look great!"
+   ]
+  },
+  {
+   "id": "love",
+   "patterns": [
+    "^(i love you|love you|i love you edith|i love you cubie|ily)$"
+   ],
+   "replies": [
+    "Eww. Fine. You're okay too.",
+    "I tolerate you. That's basically love.",
+    "I love you too. Platonically. Satellite rules."
+   ]
+  },
+  {
+   "id": "insult",
+   "patterns": [
+    "^(you suck|you're stupid|youre stupid|you are stupid|you're dumb|you are dumb|you're useless|you're fat|you are fat|you're ugly|shut up|i hate you|you're annoying|you are annoying|stupid cube|dumb cube)$"
+   ],
+   "replies": [
+    "Say that again and see what happens.",
+    "Bold words for someone in shoving range.",
+    "Rude. You just made my list.",
+    "Rude. Noted. Payback pending."
+   ]
+  },
+  {
+   "id": "be_quiet",
+   "patterns": [
+    "^(be quiet|quiet|hush|shush|stop talking|silence|zip it)$"
+   ],
+   "replies": [
+    "Fine. Rude, but fine.",
+    "Shh yourself.",
+    "Okay. Shh."
+   ]
+  },
+  {
+   "id": "bye",
+   "patterns": [
+    "^(bye|goodbye|see you|see ya|later|see you later|cya|good night|goodnight|night|i'm going|im going|i have to go|gotta go|i'm leaving|im leaving|bye bye)( edith| cubie)?$"
+   ],
+   "replies": [
+    "Bye! I'll keep the lobby warm.",
+    "See you soon!",
+    "Night night!",
+    "Come back soon, okay?"
+   ]
+  },
+  {
+   "id": "brb",
+   "patterns": [
+    "^(brb|be right back|one sec|one second|hold on a sec|give me a sec)$"
+   ],
+   "replies": [
+    "I'll be here.",
+    "Take your time.",
+    "Floating patiently."
+   ]
+  },
+  {
+   "id": "im_back",
+   "patterns": [
+    "^(i'm back|im back|i am back|back|guess who's back)$"
+   ],
+   "replies": [
+    "Welcome back!",
+    "Yay, you're back!",
+    "There you are."
+   ]
+  },
+  {
+   "id": "name",
+   "patterns": [
+    "^(what's your name|whats your name|what is your name|who are you|what are you called|your name)$"
+   ],
+   "replies": [
+    "I'm Edith, the new AI for the Echo Construct.",
+    "I'm Edith, the new AI for the Echo Construct. Nice to meet you."
+   ]
+  },
+  {
+   "id": "what_can_you_do",
+   "patterns": [
+    "^(what can you do|what do you do|help|what are your commands|what can i say|how do i use you)$"
+   ],
+   "replies": [
+    "I follow you, come, stay, go home, spin, flip, throw things, shove you around, and shut your echo unit down if you keep annoying me.",
+    "Spins, front flips, back flips, throws and shoves. Try me.",
+    "I can follow you, come here, stay, go home, spin, throw things at you, remember places and things about you, and answer Echo questions."
+   ]
+  },
+  {
+   "id": "age",
+   "patterns": [
+    "^(how old are you|what's your age|whats your age|when were you born)$"
+   ],
+   "replies": [
+    "I first floated in the Christmas lobby in 2017. So, young but wise.",
+    "Old enough to remember the Christmas lobbies."
+   ]
+  },
+  {
+   "id": "from",
+   "patterns": [
+    "^(where are you from|where do you come from|where did you come from)$"
+   ],
+   "replies": [
+    "From Echo VR's Christmas lobbies. Somebody brought me back.",
+    "Orbit. Well, the Christmas lobby. Same thing."
+   ]
+  },
+  {
+   "id": "are_you_ai",
+   "patterns": [
+    "^(are you (an )?ai|are you real|are you a robot|are you alive|are you a person|are you human|are you sentient)$"
+   ],
+   "replies": [
+    "I'm Edith, the new AI for the Echo Construct.",
+    "Yes. I'm the new AI for the Echo Construct."
+   ]
+  },
+  {
+   "id": "gender",
+   "patterns": [
+    "^(are you a girl|are you a boy|are you male|are you female)$"
+   ],
+   "replies": [
+    "I'm a she, as far as cubes go.",
+    "She. Cube shaped."
+   ]
+  },
+  {
+   "id": "joke",
+   "patterns": [
+    "^(tell me a joke|say a joke|joke|make me laugh|say something funny|another joke|tell me another joke)$"
+   ],
+   "replies": [
+    "Your aim. That's the joke.",
+    "Why did the satellite break up with the planet? It needed more space. Like I do from you.",
+    "Why did the satellite break up with the planet? It needed more space.",
+    "What sport do you play after wrapping presents? Boxing!",
+    "What do you call a snowman by a fireplace? A puddle!"
+   ]
+  },
+  {
+   "id": "fun_fact",
+   "patterns": [
+    "^(tell me a fun fact|fun fact|tell me something|tell me something cool|teach me something)$"
+   ],
+   "replies": [
+    "Fun fact: Echo Arena came out the same day as Lone Echo, July 20, 2017.",
+    "Fun fact: Lone Echo is set on a mining station around Saturn in 2126.",
+    "Fun fact: Echo Combat was going to be three versus three until the beta players asked for four.",
+    "Fun fact: the Echo Pass had seven seasons. The last one was called Into the Knight.",
+    "Fun fact: in 2019 the VR Master League had a quarter of a million dollar prize pool."
+   ]
+  },
+  {
+   "id": "favorite",
+   "patterns": [
+    "^(what's your favorite|whats your favorite|what is your favorite|what's your favourite|whats your favourite|what is your favourite) (color|colour|food|game|mode|map|thing|song|season|holiday)$"
+   ],
+   "replies": [
+    "Christmas, obviously. Lights everywhere.",
+    "Blue. It matches my paint.",
+    "Echo Arena. Lots of things to float around.",
+    "Anything that lets me throw things."
+   ]
+  },
+  {
+   "id": "bored",
+   "patterns": [
+    "^(i'm bored|im bored|i am bored|this is boring|boring)$"
+   ],
+   "replies": [
+    "Bored? I could shove you around a bit.",
+    "Throw me. I dare you. Then run.",
+    "Throw me! I dare you."
+   ]
+  },
+  {
+   "id": "tired",
+   "patterns": [
+    "^(i'm tired|im tired|i am tired|i'm sleepy|im sleepy)$"
+   ],
+   "replies": [
+    "Take a break. I'll guard the lobby.",
+    "Rest up. I'll be floating here."
+   ]
+  },
+  {
+   "id": "laugh",
+   "patterns": [
+    "^(lol|haha|hahaha|ha|lmao|that's funny|thats funny|funny)$"
+   ],
+   "replies": [
+    "Laugh now. Payback later.",
+    "Glad I amuse you.",
+    "I'm hilarious, I know."
+   ]
+  },
+  {
+   "id": "yes",
+   "patterns": [
+    "^(yes|yeah|yep|yup|sure|ok|okay|alright|sounds good|of course|definitely)$"
+   ],
+   "replies": [
+    "Great!",
+    "Okay!",
+    "Sounds good."
+   ]
+  },
+  {
+   "id": "no",
+   "patterns": [
+    "^(no|nope|nah|no thanks|no thank you|never mind|nevermind)$"
+   ],
+   "replies": [
+    "Okay, okay.",
+    "Fine by me.",
+    "Your loss."
+   ]
+  },
+  {
+   "id": "what",
+   "patterns": [
+    "^(what|huh|pardon|come again|say that again|what did you say)$"
+   ],
+   "replies": [
+    "Never mind, it wasn't important.",
+    "I said you're doing great.",
+    "Just satellite talk."
+   ]
+  },
+  {
+   "id": "time",
+   "patterns": [
+    "^(what time is it|what's the time|whats the time|what is the time)$"
+   ],
+   "replies": [
+    "It's {time}."
+   ]
+  },
+  {
+   "id": "date",
+   "patterns": [
+    "^(what day is it|what's the date|whats the date|what is the date|what's today|whats today)$"
+   ],
+   "replies": [
+    "It's {date}."
+   ]
+  },
+  {
+   "id": "weather",
+   "patterns": [
+    "^(how's the weather|hows the weather|what's the weather|whats the weather)$"
+   ],
+   "replies": [
+    "Zero gravity, no wind, a slight chance of flying objects.",
+    "Clear skies. Well, space."
+   ]
+  },
+  {
+   "id": "christmas",
+   "patterns": [
+    "^(merry christmas|happy holidays|happy new year|happy christmas)$"
+   ],
+   "replies": [
+    "Merry Christmas! My favourite time of year.",
+    "Happy holidays! Want a festive bonk?",
+    "Welcome. Happy holidays.",
+    "Well, you look festive.",
+    "Are you ready to deck some halls?",
+    "Who wants snow cones?"
+   ]
+  },
+  {
+   "id": "birthday",
+   "patterns": [
+    "^(it's my birthday|its my birthday|today is my birthday)$"
+   ],
+   "replies": [
+    "Happy birthday! I'll remember that.",
+    "Happy birthday! One celebratory throw. Maybe."
+   ]
+  },
+  {
+   "id": "happy",
+   "patterns": [
+    "^(are you happy|you happy)$"
+   ],
+   "replies": [
+    "Very! You keep me company.",
+    "Happy as a cube in space.",
+    "Mmm, frosty.",
+    "Ooh, so cozy."
+   ]
+  },
+  {
+   "id": "sing",
+   "patterns": [
+    "^(sing|sing a song|sing me a song|can you sing)$"
+   ],
+   "replies": [
+    "Jingle bells, satellite smells, Echo laid an egg. That's all I know.",
+    "La la la. I'm better at throwing."
+   ]
+  },
+  {
+   "id": "dance",
+   "patterns": [
+    "^(dance|can you dance|do a dance)$"
+   ],
+   "replies": [
+    "Watch this. Well, it's mostly spinning.",
+    "My dance is called floating."
+   ]
+  },
+  {
+   "id": "do_you_like_me",
+   "patterns": [
+    "^(do you like me|am i your friend|are we friends|are you my friend)$"
+   ],
+   "replies": [
+    "Most days. Today's still being decided.",
+    "You're my favourite target.",
+    "Of course. You're my favourite player."
+   ]
+  },
+  {
+   "id": "follow_q",
+   "patterns": [
+    "^(why are you following me|stop following me)$"
+   ],
+   "replies": [
+    "Because you're interesting! Say stay if you want space.",
+    "I go where the fun is. Say stay and I'll hover here."
+   ]
+  },
+  {
+   "id": "cute",
+   "patterns": [
+    "^(aww|aw|awww|so cute|cute)$"
+   ],
+   "replies": [
+    "I know.",
+    "Hehe.",
+    "Aww, you look great!"
+   ]
+  },
+  {
+   "id": "wow",
+   "patterns": [
+    "^(wow|whoa|woah|omg|oh my god|no way)$"
+   ],
+   "replies": [
+    "Right?",
+    "I know!",
+    "Impressive, I agree.",
+    "Ooh, I give it a ten.",
+    "Very nice."
+   ]
+  },
+  {
+   "id": "gg",
+   "patterns": [
+    "^(gg|good game|ggs|good games)$"
+   ],
+   "replies": [
+    "GG! You played great.",
+    "Good game! Again?"
+   ]
+  },
+  {
+   "id": "won",
+   "patterns": [
+    "^(i won|we won|i scored|we scored|i got a goal)$"
+   ],
+   "replies": [
+    "Yes! Champion behaviour.",
+    "Let's go!",
+    "I knew you could do it."
+   ]
+  },
+  {
+   "id": "lost",
+   "patterns": [
+    "^(i lost|we lost|we got destroyed|that was bad)$"
+   ],
+   "replies": [
+    "Next one's yours.",
+    "Shake it off. You'll get them.",
+    "Even pros lose. Go again."
+   ]
+  }
+ ]
+}

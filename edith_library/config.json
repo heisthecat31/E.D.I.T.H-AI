@@ -1,0 +1,18 @@
+{
+  "_about": "Edith's brain settings (Railway/SparkAPI/edith_brain.py), edited live like the rest of this folder. voice / fallback_voice / voice_speed make the voice pack keys (sha1 of voice|speed|text): change them only together with a new pack.",
+  "name": "Edith",
+  "wake_words": ["edith", "edit", "edyth", "edeth", "eadith", "eddith", "editha", "edie", "eadie", "satellite"],
+  "follow_up_seconds": 8,
+  "react": true,
+  "mean": true,
+  "push_after": 2,
+  "shutdown_after": 5,
+  "ignore_below": 5.0,
+  "cancel_after": 3,
+  "mean_fade_s": 90,
+  "order_hold_s": 60,
+  "voice": "hera_f5",
+  "fallback_voice": "af_heart",
+  "voice_speed": 1.1,
+  "unknown": "Sorry i dont quite know that one yet"
+}

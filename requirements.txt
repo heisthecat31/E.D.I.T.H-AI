@@ -1,0 +1,11 @@
+# Edith's own server (edith_app.py). llama-cpp-python from its prebuilt CPU wheels (no compiler needed).
+--extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+fastapi
+uvicorn
+websockets
+httpx
+numpy
+psycopg2-binary
+faster-whisper
+kokoro-onnx
+llama-cpp-python==0.3.19

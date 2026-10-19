@@ -1,0 +1,1909 @@
+{
+ "_about": "Edith's Echo VR knowledge (ai/library.py). Each entry: keys (words and phrases that point at it), q (sample questions), a (spoken answers, one is picked). Sources: Echopedia (echopedia.ntsfranz.com: glossary, skills map, Echo Pass, Echo Online, Fastest Jousts, Champions, Spark, Server Locations, command line arguments), Wikipedia (Lone Echo, Lone Echo II), Meta (Echo Combat launch posts, Quest cross-play post), ESL VR League articles, Road to VR / UploadVR / Mixed News, agent.md for her own story. Add entries freely: no code change needed.",
+ "entries": [
+  {
+   "id": "echo_vr",
+   "keys": [
+    "echo vr",
+    "this game",
+    "what game"
+   ],
+   "q": [
+    "what is echo vr",
+    "what game is this",
+    "tell me about echo vr"
+   ],
+   "a": [
+    "Echo VR is Ready At Dawn's zero gravity team game. Echo Arena is the disc sport, Echo Combat is the shooter, and the lobby is where everyone floats around, like me."
+   ]
+  },
+  {
+   "id": "developer",
+   "keys": [
+    "ready at dawn",
+    "who made",
+    "developer",
+    "studio",
+    "made echo"
+   ],
+   "q": [
+    "who made echo vr",
+    "who made this game",
+    "who is ready at dawn"
+   ],
+   "a": [
+    "Ready At Dawn made Echo VR, published by Oculus Studios. Facebook bought the studio in June 2020."
+   ]
+  },
+  {
+   "id": "rad_history",
+   "keys": [
+    "ready at dawn",
+    "order 1886",
+    "god of war",
+    "daxter",
+    "other games"
+   ],
+   "q": [
+    "what else did ready at dawn make",
+    "what other games did ready at dawn make"
+   ],
+   "a": [
+    "Before Echo, Ready At Dawn made Daxter and the God of War games on PSP, then The Order 1886. Then they went all in on VR with Lone Echo and Echo Arena."
+   ]
+  },
+  {
+   "id": "release",
+   "keys": [
+    "release",
+    "came out",
+    "launch",
+    "2017",
+    "how old",
+    "when did"
+   ],
+   "q": [
+    "when did echo arena come out",
+    "when was echo vr released",
+    "how old is echo vr"
+   ],
+   "a": [
+    "Echo Arena launched on July 20, 2017 for the Rift, the same day as Lone Echo."
+   ]
+  },
+  {
+   "id": "free",
+   "keys": [
+    "free",
+    "price",
+    "cost",
+    "intel",
+    "pay"
+   ],
+   "q": [
+    "is echo vr free",
+    "how much did echo cost",
+    "was echo arena free"
+   ],
+   "a": [
+    "Echo Arena was free to grab for its first three months thanks to Intel, and later the whole game went free to play."
+   ]
+  },
+  {
+   "id": "rename",
+   "keys": [
+    "echo arena",
+    "renamed",
+    "name change",
+    "echo vr name"
+   ],
+   "q": [
+    "why is it called echo vr",
+    "was it called echo arena"
+   ],
+   "a": [
+    "It started as Echo Arena. When Combat and more modes arrived it became Echo VR, and Arena became one of its modes."
+   ]
+  },
+  {
+   "id": "platforms",
+   "keys": [
+    "quest",
+    "rift",
+    "platform",
+    "pcvr",
+    "headset",
+    "quest beta",
+    "open beta"
+   ],
+   "q": [
+    "what headsets can play echo",
+    "is echo on quest",
+    "when did echo come to quest"
+   ],
+   "a": [
+    "Echo started on the Rift in 2017. It came to Quest as an open beta on May 5, 2020, with cross-play right after. Echo Combat stayed Rift only, or Quest through Link."
+   ]
+  },
+  {
+   "id": "shutdown",
+   "keys": [
+    "shutdown",
+    "shut down",
+    "closed",
+    "ended",
+    "dead",
+    "august 2023",
+    "offline"
+   ],
+   "q": [
+    "when did echo vr shut down",
+    "is echo vr dead",
+    "why did echo shut down"
+   ],
+   "a": [
+    "Ready At Dawn announced the shutdown on January 31, 2023, and Echo VR went offline on August 1, 2023. Matchmaking stopped at 10 AM Pacific.",
+    "Echo VR officially closed on August 1, 2023. The studio said it wanted to focus on its next project. I was not consulted."
+   ]
+  },
+  {
+   "id": "shutdown_why",
+   "keys": [
+    "why",
+    "bosworth",
+    "player count",
+    "players"
+   ],
+   "q": [
+    "why did they shut echo down",
+    "how many people played echo"
+   ],
+   "a": [
+    "The studio said it was moving to its next project, and Meta's Andrew Bosworth said the player base was loyal but small, in the low tens of thousands."
+   ]
+  },
+  {
+   "id": "protest",
+   "keys": [
+    "protest",
+    "petition",
+    "banner",
+    "fight for echo",
+    "save echo"
+   ],
+   "q": [
+    "did people protest the shutdown",
+    "what was fight for echo"
+   ],
+   "a": [
+    "Players fought for it. Fight For Echo ran a petition, and on February 28, 2023 they flew a banner over Meta's headquarters asking them not to shut it down."
+   ]
+  },
+  {
+   "id": "revival",
+   "keys": [
+    "revival",
+    "community edition",
+    "lounge",
+    "echo online",
+    "still play",
+    "play now",
+    "private server",
+    "discord"
+   ],
+   "q": [
+    "how do people play echo now",
+    "can you still play echo vr",
+    "what is echo vr community edition"
+   ],
+   "a": [
+    "The community kept it alive. Echo VR Community Edition runs through the Echo VR Lounge Discord: you link your headset with a code there and play on community servers.",
+    "Volunteers run community servers now. Join the Echo VR Lounge Discord, link your headset, and patch the game for Link or with SideQuest."
+   ]
+  },
+  {
+   "id": "echo_pass",
+   "keys": [
+    "echo pass",
+    "battle pass",
+    "season pass",
+    "seasons",
+    "premium"
+   ],
+   "q": [
+    "what is the echo pass",
+    "how many echo pass seasons were there"
+   ],
+   "a": [
+    "The Echo Pass was Echo's battle pass, from March 9, 2021. Fifty reward tiers, ten free, premium for a thousand Echo Points. There were seven seasons, the last one Into the Knight."
+   ]
+  },
+  {
+   "id": "echo_points",
+   "keys": [
+    "echo points",
+    "currency",
+    "points store"
+   ],
+   "q": [
+    "what are echo points"
+   ],
+   "a": [
+    "Echo Points were the premium currency. A thousand of them bought the premium Echo Pass, about ten dollars."
+   ]
+  },
+  {
+   "id": "vrml",
+   "keys": [
+    "vrml",
+    "vr master league",
+    "esports",
+    "tournament",
+    "league",
+    "competitive",
+    "pro"
+   ],
+   "q": [
+    "what is vrml",
+    "was echo an esport",
+    "how did competitive echo work"
+   ],
+   "a": [
+    "Echo was a real esport. The VR Master League ran seasons with teams playing twice a week, and season three in 2019 had a two hundred fifty thousand dollar prize pool.",
+    "Competitive Echo was four versus four. VRML ran the big leagues, and after it ended EML and VRTL took over."
+   ]
+  },
+  {
+   "id": "leagues_now",
+   "keys": [
+    "eml",
+    "vrtl",
+    "echo master league",
+    "tournaments now"
+   ],
+   "q": [
+    "are there still tournaments",
+    "what is eml"
+   ],
+   "a": [
+    "Since VRML stopped, the Echo Master League and the Virtual Reality Tournament League run their own tournaments and Discords."
+   ]
+  },
+  {
+   "id": "spark",
+   "keys": [
+    "spark",
+    "stats",
+    "spectate",
+    "spectator",
+    "private match",
+    "ignite"
+   ],
+   "q": [
+    "what is spark",
+    "how do i make a private match"
+   ],
+   "a": [
+    "Spark is the community tool for stats, spectating and private matches. The Ignite Discord supports it."
+   ]
+  },
+  {
+   "id": "tools",
+   "keys": [
+    "replay viewer",
+    "protil",
+    "east",
+    "bhaptics",
+    "echo shadow",
+    "tools"
+   ],
+   "q": [
+    "what community tools are there"
+   ],
+   "a": [
+    "The community built Spark, Spark Mini, a replay viewer, Protil, EAST, Echo Shadow and even a bHaptics mod."
+   ]
+  },
+  {
+   "id": "arena_how",
+   "keys": [
+    "how to play",
+    "arena",
+    "rules",
+    "objective",
+    "how does arena work",
+    "disc"
+   ],
+   "q": [
+    "how do you play echo arena",
+    "what are the rules of arena",
+    "how does arena work"
+   ],
+   "a": [
+    "Grab the disc, fly it across the arena, and throw it through the other team's goal. Punch heads to stun people, shield to block, and regrab teammates to go fast.",
+    "It's zero gravity frisbee meets rugby. Win the joust, keep the disc, and throw it into the enemy goal."
+   ]
+  },
+  {
+   "id": "teams",
+   "keys": [
+    "team size",
+    "players per team",
+    "how many players",
+    "4v4",
+    "5v5",
+    "3v3"
+   ],
+   "q": [
+    "how many players are on a team",
+    "is it 4v4",
+    "was echo 3v3"
+   ],
+   "a": [
+    "Public Arena on the Rift was three versus three until May 2020, then four versus four. Teams can hold up to five, and competitive play is four versus four."
+   ]
+  },
+  {
+   "id": "scoring",
+   "keys": [
+    "points",
+    "score",
+    "two pointer",
+    "three pointer",
+    "3 pointer",
+    "2 pointer",
+    "how many points"
+   ],
+   "q": [
+    "how many points is a goal",
+    "what is a three pointer",
+    "how does scoring work"
+   ],
+   "a": [
+    "Goals from close in are two points, and shots from long range are three. Banks off the backboard count too."
+   ]
+  },
+  {
+   "id": "overtime",
+   "keys": [
+    "overtime",
+    "tie",
+    "tied",
+    "sudden death"
+   ],
+   "q": [
+    "what happens in a tie",
+    "how does overtime work"
+   ],
+   "a": [
+    "If it's tied when the clock runs out, it goes to overtime and the next goal wins."
+   ]
+  },
+  {
+   "id": "joust",
+   "keys": [
+    "joust",
+    "kickoff",
+    "catapult",
+    "launch",
+    "start of the round"
+   ],
+   "q": [
+    "what is a joust",
+    "how do i win the joust",
+    "what is the kickoff"
+   ],
+   "a": [
+    "The joust is the kickoff. Both teams launch from their side toward the disc in the middle, and whoever gets there first and holds on usually takes the round."
+   ]
+  },
+  {
+   "id": "pe_joust",
+   "keys": [
+    "pe joust",
+    "tunnel joust",
+    "faster joust"
+   ],
+   "q": [
+    "what is a pe joust"
+   ],
+   "a": [
+    "A PE joust is launching from the tunnels: start further back and regrab before the doors open, for more speed than the launch ring gives."
+   ]
+  },
+  {
+   "id": "launch_speed",
+   "keys": [
+    "11.5",
+    "launch speed",
+    "double grab",
+    "fastest launch"
+   ],
+   "q": [
+    "how fast is the launch",
+    "what is the 11.5 launch"
+   ],
+   "a": [
+    "The catapult gives you ten metres a second. Regrabbing it right as it moved used to give eleven and a half, until that got patched."
+   ]
+  },
+  {
+   "id": "stun",
+   "keys": [
+    "stun",
+    "punch",
+    "hit someone",
+    "knock out",
+    "fist"
+   ],
+   "q": [
+    "how do i stun people",
+    "how does stunning work"
+   ],
+   "a": [
+    "Make a fist and punch someone in the head to stun them. Time it when they go for a loose disc or a pass."
+   ]
+  },
+  {
+   "id": "shield",
+   "keys": [
+    "shield",
+    "block",
+    "blocking",
+    "defend"
+   ],
+   "q": [
+    "how do i block",
+    "how does the shield work"
+   ],
+   "a": [
+    "Put both fists up in front of your face to shield. It blocks punches for a few seconds, then needs a short cooldown."
+   ]
+  },
+  {
+   "id": "brawl_triangle",
+   "keys": [
+    "shield beats",
+    "rock paper scissors",
+    "grapple",
+    "brawl cycle",
+    "counter"
+   ],
+   "q": [
+    "what beats a shield",
+    "how does brawling work"
+   ],
+   "a": [
+    "It's rock paper scissors: shield beats stun, stun beats grapple, and grapple beats shield. Grabbing back cancels their grab."
+   ]
+  },
+  {
+   "id": "brawling",
+   "keys": [
+    "brawling",
+    "boxing",
+    "fighting"
+   ],
+   "q": [
+    "what is brawling"
+   ],
+   "a": [
+    "Brawling is the fighting side of Echo: stunning, blocking, dodging and grappling. Also called boxing."
+   ]
+  },
+  {
+   "id": "movement",
+   "keys": [
+    "move",
+    "fly",
+    "boost",
+    "booster",
+    "thruster",
+    "brake",
+    "controls",
+    "movement"
+   ],
+   "q": [
+    "how do i move",
+    "how do i fly",
+    "how do the boosters work",
+    "what are the controls"
+   ],
+   "a": [
+    "Grab and push off things to fly. Point your hands and hold A and X for the hand boosters, click the left stick for the back booster, and click the right stick to brake.",
+    "Most of your speed comes from pushing off walls and teammates. Boosters are for small corrections, and the right stick brakes."
+   ]
+  },
+  {
+   "id": "regrab",
+   "keys": [
+    "regrab",
+    "stack",
+    "stacking",
+    "chain",
+    "go fast",
+    "speed"
+   ],
+   "q": [
+    "how do i go faster",
+    "what is a regrab",
+    "what is stacking"
+   ],
+   "a": [
+    "Regrabbing is how you go fast: grab a teammate in flight, swing behind them and pull yourself through. Chain it and you both speed up.",
+    "Stacking, or chain boosting, is pulling off each other over and over to build speed."
+   ]
+  },
+  {
+   "id": "regrab_how",
+   "keys": [
+    "right of way",
+    "pull through",
+    "swing around",
+    "grab chest"
+   ],
+   "q": [
+    "how do i regrab properly"
+   ],
+   "a": [
+    "The player in front grabs the player behind's chest, swings round, and pulls through. Lead with clear signals and correct drift with small pulls."
+   ]
+  },
+  {
+   "id": "autograb",
+   "keys": [
+    "autograb",
+    "auto grab",
+    "sticky hands",
+    "grip"
+   ],
+   "q": [
+    "what is autograb",
+    "what are sticky hands"
+   ],
+   "a": [
+    "Autograb, or sticky hands, means you just hold grip and your hand catches whatever it touches. Then you only have to time the release."
+   ]
+  },
+  {
+   "id": "anchor",
+   "keys": [
+    "anchor",
+    "stop",
+    "cancel momentum"
+   ],
+   "q": [
+    "how do i stop quickly"
+   ],
+   "a": [
+    "Anchor: grab any surface to kill your momentum instantly, then push off any direction you like."
+   ]
+  },
+  {
+   "id": "slap",
+   "keys": [
+    "slap",
+    "slapping"
+   ],
+   "q": [
+    "what is slapping"
+   ],
+   "a": [
+    "A slap is letting go almost the instant your hand touches a surface. It builds speed fast."
+   ]
+  },
+  {
+   "id": "juke",
+   "keys": [
+    "juke",
+    "dodge",
+    "fake"
+   ],
+   "q": [
+    "what is a juke",
+    "how do i dodge"
+   ],
+   "a": [
+    "A juke is a quick change of direction while anchored to a surface or a player. Great for shaking a defender."
+   ]
+  },
+  {
+   "id": "drift",
+   "keys": [
+    "drift",
+    "crawl",
+    "crawling"
+   ],
+   "q": [
+    "what is drifting"
+   ],
+   "a": [
+    "Drifting is taking bigger steps between grabs while crawling. You move faster than with little steps."
+   ]
+  },
+  {
+   "id": "turning",
+   "keys": [
+    "turn",
+    "turning",
+    "snap turn",
+    "smooth turn",
+    "rotation"
+   ],
+   "q": [
+    "how should i turn",
+    "what turn settings should i use"
+   ],
+   "a": [
+    "Turn with your body when you can. If you use the stick, smooth turning works best, and keep pitch and roll off."
+   ]
+  },
+  {
+   "id": "throwing",
+   "keys": [
+    "throw",
+    "throwing",
+    "shoot",
+    "aim",
+    "accuracy",
+    "shot"
+   ],
+   "q": [
+    "how do i throw better",
+    "how do i aim",
+    "tips for throwing"
+   ],
+   "a": [
+    "Aim at a spot, use a relaxed whip, and flick your wrist at the top of the swing. Overarm is better left and right, sidearm better up and down.",
+    "Throw with your whole body and float toward the target as you release. Speed comes from the wrist flick."
+   ]
+  },
+  {
+   "id": "catching",
+   "keys": [
+    "catch",
+    "catching",
+    "bubble"
+   ],
+   "q": [
+    "how do i catch the disc"
+   ],
+   "a": [
+    "Hold grip and scoop the disc as it enters its glowing bubble. Stay anchored if you can, and move to where it's going, not where it is."
+   ]
+  },
+  {
+   "id": "bounces",
+   "keys": [
+    "bounce",
+    "bounces",
+    "read the disc"
+   ],
+   "q": [
+    "how do i read bounces"
+   ],
+   "a": [
+    "Watch where the disc is going to be after the bounce and go there, not where it is now."
+   ]
+  },
+  {
+   "id": "leech",
+   "keys": [
+    "leech",
+    "leeching",
+    "grab legs"
+   ],
+   "q": [
+    "what is leeching",
+    "how do i get rid of a leech"
+   ],
+   "a": [
+    "A leech grabs an enemy's legs and holds on. Shake one off with a timed shield, a head bump off a block, or by grabbing them back."
+   ]
+  },
+  {
+   "id": "leaving_gift",
+   "keys": [
+    "leaving gift",
+    "stun after"
+   ],
+   "q": [
+    "what is a leaving gift"
+   ],
+   "a": [
+    "A leaving gift is stunning someone right after you pull off them, so you keep the speed and they keep a headache."
+   ]
+  },
+  {
+   "id": "stun_boost",
+   "keys": [
+    "stun boost",
+    "stun boosting"
+   ],
+   "q": [
+    "what is stun boosting"
+   ],
+   "a": [
+    "Stun boosting is punching someone away from where you want to go. If you're both still, you pick up about one point one metres a second."
+   ]
+  },
+  {
+   "id": "joker_train",
+   "keys": [
+    "joker train"
+   ],
+   "q": [
+    "what is a joker train"
+   ],
+   "a": [
+    "A joker train is two stacked players where the back one holds the disc, so the holder is protected while you push forward."
+   ]
+  },
+  {
+   "id": "geometry",
+   "keys": [
+    "geometry",
+    "geo",
+    "nest",
+    "bowtie",
+    "bow tie",
+    "pac",
+    "pacman",
+    "ghost",
+    "double diamond",
+    "cloud",
+    "nugget",
+    "trench",
+    "map layout"
+   ],
+   "q": [
+    "what is the nest",
+    "what are the arena blocks called",
+    "what is geometry"
+   ],
+   "a": [
+    "The floating shapes in the arena are called geometry. There's the nest, the bowtie, pac, ghost, double diamond, the cloud, the nugget and the trench."
+   ]
+  },
+  {
+   "id": "shots_2pt",
+   "keys": [
+    "backboard",
+    "pocket",
+    "slam dunk",
+    "zero angle",
+    "two point shot"
+   ],
+   "q": [
+    "what are good two point shots"
+   ],
+   "a": [
+    "Close shots: bank it off the backboard inside or outside the post, shoot from zero angle, or put it straight in the pocket. You can even slam dunk it."
+   ]
+  },
+  {
+   "id": "shots_3pt",
+   "keys": [
+    "long shot",
+    "three point shot",
+    "pacman shot",
+    "windmill",
+    "tunnel side arm"
+   ],
+   "q": [
+    "what are good three point shots",
+    "how do i score from far"
+   ],
+   "a": [
+    "Long range: the Pacman shot, the Bowtie mail slot, a low windmill, a tunnel side arm, or a long bounce off the bubble walls. And always take the open goal."
+   ]
+  },
+  {
+   "id": "boop_shot",
+   "keys": [
+    "boop shot",
+    "boop90"
+   ],
+   "q": [
+    "what is a boop shot"
+   ],
+   "a": [
+    "The boop shot is a trick shot named after Boop90: from the tunnel, bounce it over the cloud into the goal."
+   ]
+  },
+  {
+   "id": "cloud_shot",
+   "keys": [
+    "cloud shot",
+    "what shot"
+   ],
+   "q": [
+    "what is a cloud shot"
+   ],
+   "a": [
+    "A cloud shot, or a what shot, is thrown from mid floor so it bounces off the cloud into the goal."
+   ]
+  },
+  {
+   "id": "kungg_shot",
+   "keys": [
+    "kungg shot",
+    "kungg"
+   ],
+   "q": [
+    "what is a kungg shot"
+   ],
+   "a": [
+    "The kungg shot, named after kungg, goes from between ghost or pac on your side to the far wall. Handy when everyone's on your side."
+   ]
+  },
+  {
+   "id": "nest_bounce",
+   "keys": [
+    "nest bounce"
+   ],
+   "q": [
+    "what is a nest bounce"
+   ],
+   "a": [
+    "A nest bounce bounces off the bottom of the nest into the goal. Ryann of Ignite found it."
+   ]
+  },
+  {
+   "id": "mail_slot",
+   "keys": [
+    "mail slot",
+    "mailslot"
+   ],
+   "q": [
+    "what is a mail slot"
+   ],
+   "a": [
+    "A mail slot is any shot through the gap between the top of the shield and the bottom of the nest."
+   ]
+  },
+  {
+   "id": "grandpa_shot",
+   "keys": [
+    "grandpa shot"
+   ],
+   "q": [
+    "what is a grandpa shot"
+   ],
+   "a": [
+    "The grandpa shot is thrown backwards through your legs while facing away from the goal. Pure style."
+   ]
+  },
+  {
+   "id": "whirly",
+   "keys": [
+    "whirly twirly",
+    "spin shot",
+    "hide release"
+   ],
+   "q": [
+    "what is a whirly twirly"
+   ],
+   "a": [
+    "A whirly twirly adds pitch or roll to your throw so the goalie can't read your release."
+   ]
+  },
+  {
+   "id": "trennis",
+   "keys": [
+    "trennis",
+    "trench tennis"
+   ],
+   "q": [
+    "what is trennis"
+   ],
+   "a": [
+    "Trennis is tennis on the trench: take turns slapping the disc back and forth and try to get it past each other."
+   ]
+  },
+  {
+   "id": "patched",
+   "keys": [
+    "parachuting",
+    "disk popping",
+    "headbutting",
+    "patched",
+    "pali door",
+    "palidore",
+    "old tricks",
+    "glitches"
+   ],
+   "q": [
+    "what old tricks got patched",
+    "what was parachuting",
+    "what is the pali door"
+   ],
+   "a": [
+    "Old tricks: parachuting, grabbing your own back to stop dead, and disc popping, headbutting the disc for speed. Both got patched. And the Pali door was a hole in the old lobby, found by Palidore."
+   ]
+  },
+  {
+   "id": "pts",
+   "keys": [
+    "pts",
+    "public testing server",
+    "test server"
+   ],
+   "q": [
+    "what was the pts"
+   ],
+   "a": [
+    "The public testing servers ran Echo Pass tests from January 2021, and a goalie test in September 2022."
+   ]
+  },
+  {
+   "id": "positions",
+   "keys": [
+    "position",
+    "roles",
+    "goalie",
+    "defense",
+    "offense",
+    "striker"
+   ],
+   "q": [
+    "what positions are there",
+    "what does a goalie do"
+   ],
+   "a": [
+    "Teams usually split into offense, defense and a goalie. The goalie guards the goal, defense stops the attack and wins turnovers, and offense scores."
+   ]
+  },
+  {
+   "id": "tips_new",
+   "keys": [
+    "new player",
+    "beginner",
+    "tips",
+    "advice",
+    "get better",
+    "improve",
+    "how do i get good"
+   ],
+   "q": [
+    "any tips for a new player",
+    "how do i get better at echo"
+   ],
+   "a": [
+    "Learn to push off walls and regrab teammates before anything else. Stay anchored, watch the disc, and talk to your team.",
+    "Practice in the lobby: throwing, catching, and pushing off things. Then play lots of public matches and copy what good players do."
+   ]
+  },
+  {
+   "id": "speed_top",
+   "keys": [
+    "top speed",
+    "how fast",
+    "fastest",
+    "max speed"
+   ],
+   "q": [
+    "how fast can you go in echo",
+    "what is the top speed"
+   ],
+   "a": [
+    "With good regrabs players fly up to around a hundred kilometres an hour. I mostly cruise."
+   ]
+  },
+  {
+   "id": "combat",
+   "keys": [
+    "echo combat",
+    "combat",
+    "shooter",
+    "guns"
+   ],
+   "q": [
+    "what is echo combat",
+    "when did echo combat come out"
+   ],
+   "a": [
+    "Echo Combat is the zero gravity team shooter. It came out on November 15, 2018 for the Rift, as a ten dollar add on, four players a team."
+   ]
+  },
+  {
+   "id": "combat_modes",
+   "keys": [
+    "payload",
+    "capture point",
+    "control point",
+    "combat modes",
+    "objective"
+   ],
+   "q": [
+    "what modes does combat have",
+    "what is payload",
+    "what is capture point"
+   ],
+   "a": [
+    "Combat had Payload, where one team escorts a payload along a track, and point modes: Control Point on Dyson and Capture Point, added with Combustion."
+   ]
+  },
+  {
+   "id": "weapons",
+   "keys": [
+    "weapons",
+    "pulsar",
+    "nova",
+    "comet",
+    "meteor",
+    "gun"
+   ],
+   "q": [
+    "what weapons are in combat",
+    "what is the pulsar"
+   ],
+   "a": [
+    "Four weapons: the Pulsar for mid range, the Nova shotgun for close up, the Comet sniper for long range, and the Meteor, a mid to long range rocket launcher."
+   ]
+  },
+  {
+   "id": "tac_mods",
+   "keys": [
+    "tac mod",
+    "tac mods",
+    "scanner",
+    "energy barrier",
+    "phase shift",
+    "repair matrix"
+   ],
+   "q": [
+    "what tac mods are there",
+    "what is phase shift"
+   ],
+   "a": [
+    "Tac mods: Scanner shows enemies through walls, Energy Barrier is a placeable shield, Phase Shift makes you invulnerable for a moment, and Repair Matrix heals nearby allies."
+   ]
+  },
+  {
+   "id": "ordnance",
+   "keys": [
+    "ordnance",
+    "grenade",
+    "detonator",
+    "arc mine",
+    "stun field",
+    "instant repair"
+   ],
+   "q": [
+    "what ordnance is there",
+    "what is an arc mine"
+   ],
+   "a": [
+    "Ordnances: the Detonator explodes, the Stun ball stuns whoever it touches, the Arc Mine stuns anyone who gets close, and Instant Repair heals everyone nearby."
+   ]
+  },
+  {
+   "id": "combat_maps",
+   "keys": [
+    "combat maps",
+    "dyson",
+    "combustion",
+    "fission",
+    "surge",
+    "gauss",
+    "maps"
+   ],
+   "q": [
+    "what combat maps are there",
+    "what is dyson"
+   ],
+   "a": [
+    "The Combat maps are Dyson, the big open launch map, then Combustion, Fission and Surge."
+   ]
+  },
+  {
+   "id": "combat_teams",
+   "keys": [
+    "3v3",
+    "combat team size"
+   ],
+   "q": [
+    "how many players in combat"
+   ],
+   "a": [
+    "Combat is four versus four. It was going to be three versus three, but the beta players asked for four."
+   ]
+  },
+  {
+   "id": "combat_platform",
+   "keys": [
+    "combat on quest",
+    "combat quest"
+   ],
+   "q": [
+    "can i play combat on quest"
+   ],
+   "a": [
+    "Combat was Rift only. Quest players used Link or Air Link to play it."
+   ]
+  },
+  {
+   "id": "lobby",
+   "keys": [
+    "lobby",
+    "social",
+    "areas",
+    "rooms",
+    "what's here"
+   ],
+   "q": [
+    "what is there to do in the lobby",
+    "what areas are in the lobby"
+   ],
+   "a": [
+    "The lobby has the Brawler Room, Character Customization, Arena Training, Combat Training, the staging area by the launch tubes, the viewing area, and the matchmaking terminals in the middle.",
+    "Practice throwing, try the brawler room, change your look at character customization, or queue at the terminals. Or hang out with me."
+   ]
+  },
+  {
+   "id": "terminals",
+   "keys": [
+    "terminal",
+    "terminals",
+    "matchmaking",
+    "queue",
+    "join a match"
+   ],
+   "q": [
+    "how do i join a match",
+    "what are the terminals for"
+   ],
+   "a": [
+    "Use the terminals round the middle of the lobby to join matchmaking, or go through your arm computer."
+   ]
+  },
+  {
+   "id": "brawler_room",
+   "keys": [
+    "brawler room",
+    "brawler"
+   ],
+   "q": [
+    "what is the brawler room"
+   ],
+   "a": [
+    "The Brawler Room is for practising your stuns and blocks without ruining a real match."
+   ]
+  },
+  {
+   "id": "customization",
+   "keys": [
+    "customization",
+    "cosmetics",
+    "skins",
+    "chassis",
+    "emote",
+    "decal",
+    "outfit",
+    "look"
+   ],
+   "q": [
+    "how do i change my look",
+    "where do i get cosmetics"
+   ],
+   "a": [
+    "Head to Character Customization in the lobby. Chassis, emotes, decals, banners, tags and more. Many came from the Echo Pass."
+   ]
+  },
+  {
+   "id": "arm_computer",
+   "keys": [
+    "arm computer",
+    "wrist menu",
+    "settings",
+    "mute",
+    "personal bubble",
+    "ghost player"
+   ],
+   "q": [
+    "how do i mute someone",
+    "what is the arm computer"
+   ],
+   "a": [
+    "Open your arm computer for comfort and safety options: mute, personal bubble, ghosting, your lobby list and party controls."
+   ]
+  },
+  {
+   "id": "launch_tubes",
+   "keys": [
+    "launch tubes",
+    "tubes",
+    "spawn"
+   ],
+   "q": [
+    "what are the launch tubes"
+   ],
+   "a": [
+    "The launch tubes are where you arrive in the lobby. I like to wait near there and say hi."
+   ]
+  },
+  {
+   "id": "lone_echo",
+   "keys": [
+    "lone echo",
+    "story mode",
+    "single player"
+   ],
+   "q": [
+    "what is lone echo",
+    "when did lone echo come out"
+   ],
+   "a": [
+    "Lone Echo is Ready At Dawn's single player VR adventure, out July 20, 2017 on the Rift. You play Jack, an android on a mining station around Saturn."
+   ]
+  },
+  {
+   "id": "lone_echo_setting",
+   "keys": [
+    "kronos",
+    "kronos 2",
+    "saturn",
+    "2126",
+    "mining station",
+    "setting"
+   ],
+   "q": [
+    "where is lone echo set",
+    "what is kronos two"
+   ],
+   "a": [
+    "Lone Echo is set in 2126 on Kronos Two, a mining station orbiting Saturn. Lovely rings, terrible commute."
+   ]
+  },
+  {
+   "id": "jack",
+   "keys": [
+    "jack",
+    "echo one",
+    "android",
+    "troy baker"
+   ],
+   "q": [
+    "who is jack",
+    "who voices jack"
+   ],
+   "a": [
+    "Jack is an Echo One android, the station's helper in Lone Echo. Troy Baker voices him."
+   ]
+  },
+  {
+   "id": "liv",
+   "keys": [
+    "liv",
+    "olivia",
+    "rhodes",
+    "captain",
+    "alice coulthard"
+   ],
+   "q": [
+    "who is olivia rhodes",
+    "who is liv",
+    "who voices liv"
+   ],
+   "a": [
+    "Captain Olivia Rhodes, Liv, is the human Jack serves on Kronos Two. Alice Coulthard voices her."
+   ]
+  },
+  {
+   "id": "lone_echo_plot",
+   "keys": [
+    "plot",
+    "story",
+    "anomaly",
+    "astrea",
+    "apollo",
+    "what happens",
+    "atlas initiative"
+   ],
+   "q": [
+    "what is the story of lone echo",
+    "what happens in lone echo"
+   ],
+   "a": [
+    "Jack and Captain Rhodes investigate an anomaly near Saturn. A huge ship appears, Kronos Two is wrecked, and Liv flees to that ship, the Astrea. Jack follows her, meets its AI Apollo, and finds the crew dead."
+   ]
+  },
+  {
+   "id": "lone_echo_ending",
+   "keys": [
+    "ending",
+    "how does it end",
+    "ftl jump",
+    "time jump",
+    "400 years",
+    "cliffhanger"
+   ],
+   "q": [
+    "how does lone echo end",
+    "what happens at the end of lone echo"
+   ],
+   "a": [
+    "Spoilers: Jack revives Liv when her oxygen runs out, then they make a faster than light jump to save the Astrea. They're still at Saturn, but four hundred years later, and a rescue ship says help is on the way."
+   ]
+  },
+  {
+   "id": "lone_echo_awards",
+   "keys": [
+    "awards",
+    "e3",
+    "dice award",
+    "best vr game"
+   ],
+   "q": [
+    "did lone echo win awards"
+   ],
+   "a": [
+    "Lone Echo won the E3 2017 Game Critics Award for best VR game, and D.I.C.E. awards for immersive reality game of the year and technical achievement."
+   ]
+  },
+  {
+   "id": "lone_echo_2",
+   "keys": [
+    "lone echo 2",
+    "lone echo ii",
+    "lone echo two",
+    "sequel"
+   ],
+   "q": [
+    "what is lone echo 2",
+    "when did lone echo 2 come out"
+   ],
+   "a": [
+    "Lone Echo Two came out on October 12, 2021 for the Rift. Jack and Liv are stranded far in the future and try to find their way home."
+   ]
+  },
+  {
+   "id": "lone_echo_2_story",
+   "keys": [
+    "chiron",
+    "chiron station",
+    "ticks",
+    "biomass",
+    "lone echo 2 story",
+    "story of lone echo 2",
+    "plot of lone echo 2",
+    "what happens in lone echo 2"
+   ],
+   "q": [
+    "what is the story of lone echo 2",
+    "what are the ticks",
+    "what's the story of lone echo two",
+    "what happens in lone echo 2"
+   ],
+   "a": [
+    "In Lone Echo Two, Jack and Liv end up on Chiron Station, which looks abandoned. The biomass from the first game has evolved into ticks that chase energy, so you sneak around them."
+   ]
+  },
+  {
+   "id": "lone_echo_2_gameplay",
+   "keys": [
+    "cutting tool",
+    "scanner tool",
+    "eva booster",
+    "puzzles"
+   ],
+   "q": [
+    "how do you play lone echo 2"
+   ],
+   "a": [
+    "Same zero gravity grabbing, plus wrist thrusters, an EVA booster, the scanner and cutting tools, cranes, doors and holographic maps. And enemies you have to avoid or distract."
+   ]
+  },
+  {
+   "id": "lone_echo_2_team",
+   "keys": [
+    "ru weerasuriya",
+    "director",
+    "jason graves",
+    "composer"
+   ],
+   "q": [
+    "who made lone echo 2"
+   ],
+   "a": [
+    "Lone Echo Two was directed by Ru Weerasuriya and Nathan Phal-Liff, with music by Jason Graves."
+   ]
+  },
+  {
+   "id": "lone_echo_2_reception",
+   "keys": [
+    "metacritic",
+    "review",
+    "reviews",
+    "game awards"
+   ],
+   "q": [
+    "was lone echo 2 good",
+    "what score did lone echo 2 get"
+   ],
+   "a": [
+    "Lone Echo Two scored seventy eight on Metacritic, won two D.I.C.E. awards, and was nominated for best VR game at The Game Awards 2021."
+   ]
+  },
+  {
+   "id": "echo_lore",
+   "keys": [
+    "lore",
+    "same universe",
+    "echo universe"
+   ],
+   "q": [
+    "is echo arena in the lone echo universe"
+   ],
+   "a": [
+    "Echo Arena borrows Lone Echo's world: everyone's an Echo android playing in zero gravity. Same universe, more frisbee."
+   ]
+  },
+  {
+   "id": "cubie_who",
+   "keys": [
+    "who are you",
+    "what are you",
+    "cubesat",
+    "satellite",
+    "christmas"
+   ],
+   "q": [
+    "who are you",
+    "what are you",
+    "where did you come from"
+   ],
+   "a": [
+    "I'm Edith, the new AI for the Echo Construct. I used to be a CubeSat in the Christmas lobbies. Model MDL-6SP, if you read my side."
+   ]
+  },
+  {
+   "id": "cubie_christmas",
+   "keys": [
+    "christmas lobby",
+    "christmas event",
+    "2017",
+    "2018",
+    "snowballs",
+    "presents"
+   ],
+   "q": [
+    "what did you do at christmas",
+    "what was the christmas lobby"
+   ],
+   "a": [
+    "In the Christmas lobbies I toured a route of waypoints, went where the players were, and threw things at anyone who threw me. There were presents you could teleport through, too."
+   ]
+  },
+  {
+   "id": "cubie_port",
+   "keys": [
+    "face",
+    "io port",
+    "smiley",
+    "screen"
+   ],
+   "q": [
+    "what is on your face",
+    "what is that screen"
+   ],
+   "a": [
+    "That's my I O port. It shows my face, and in Christmas it took snapshots."
+   ]
+  },
+  {
+   "id": "cubie_thrusters",
+   "keys": [
+    "thrusters",
+    "how do you fly",
+    "jets"
+   ],
+   "q": [
+    "how do you fly",
+    "what are your jets"
+   ],
+   "a": [
+    "Eight little thrusters on my corners. They fire whichever way I need to push."
+   ]
+  },
+  {
+   "id": "cubie_snowballs",
+   "keys": [
+    "why do you throw",
+    "snowball rules",
+    "when do you throw"
+   ],
+   "q": [
+    "why do you throw snowballs",
+    "when do you throw snowballs"
+   ],
+   "a": [
+    "Only when you throw me or headbutt me. Fair is fair."
+   ]
+  },
+  {
+   "id": "lobby_2",
+   "keys": [
+    "lobby 2.0",
+    "new lobby",
+    "patch 9",
+    "quarter court",
+    "lobby update"
+   ],
+   "q": [
+    "when did the lobby change",
+    "what was lobby 2.0"
+   ],
+   "a": [
+    "Patch 9.0 in April 2018 brought Lobby 2.0: a bigger lobby with a quarter court for shot practice, launch tubes for practising the joust, and the brawler and customization rooms back. A big part was taped off as Echo Combat, under construction."
+   ]
+  },
+  {
+   "id": "personal_disc",
+   "keys": [
+    "personal disc",
+    "own disc",
+    "summon disc",
+    "practice disc"
+   ],
+   "q": [
+    "can i get my own disc",
+    "how do i practice throwing"
+   ],
+   "a": [
+    "Since Lobby 2.0 you can summon your own disc in the lobby, so nobody can steal or hide yours while you practise."
+   ]
+  },
+  {
+   "id": "mini_arena",
+   "keys": [
+    "mini arena",
+    "mini lobby",
+    "honor rules",
+    "mini match"
+   ],
+   "q": [
+    "what is the mini arena"
+   ],
+   "a": [
+    "The lobby kept a small symmetrical mini arena for quick honor rules matches, next to the quarter court for practice."
+   ]
+  },
+  {
+   "id": "ai_bots",
+   "keys": [
+    "bots",
+    "ai opponents",
+    "tutorial",
+    "patch 25",
+    "practice against bots"
+   ],
+   "q": [
+    "are there bots in echo",
+    "is there a tutorial"
+   ],
+   "a": [
+    "Patch 25.0 in October 2019 added AI opponents and a new player tutorial, ahead of the Quest version."
+   ]
+  },
+  {
+   "id": "quest_delay",
+   "keys": [
+    "delayed",
+    "quest release delayed",
+    "2019",
+    "2020"
+   ],
+   "q": [
+    "why did echo come to quest late"
+   ],
+   "a": [
+    "Echo Arena was meant for Quest in 2019 but slipped to 2020. The open beta started May 5, 2020, while everyone was stuck at home."
+   ]
+  },
+  {
+   "id": "crossplay",
+   "keys": [
+    "cross play",
+    "crossplay",
+    "quest and rift together"
+   ],
+   "q": [
+    "can quest and rift play together"
+   ],
+   "a": [
+    "Yes. Cross-play between Quest and Rift was added in May 2020, right after the Quest open beta started."
+   ]
+  },
+  {
+   "id": "echo_pass_seasons",
+   "keys": [
+    "season 1",
+    "season 2",
+    "season 3",
+    "season 4",
+    "season 5",
+    "season 6",
+    "season 7",
+    "into the knight",
+    "season dates"
+   ],
+   "q": [
+    "when was each echo pass season",
+    "what was season 7"
+   ],
+   "a": [
+    "Season one ran March to May 2021, then June to August, September to November, December to March 2022, March to May, June to September, and season seven, Into the Knight, from October 2022 to January 31, 2023."
+   ]
+  },
+  {
+   "id": "txp",
+   "keys": [
+    "txp",
+    "tier experience",
+    "xp boost",
+    "level up",
+    "unlocks"
+   ],
+   "q": [
+    "what is txp",
+    "how do i level up"
+   ],
+   "a": [
+    "You earned experience from public matches to level up and unlock customization. The Echo Pass used tier experience points, TXP, with personal and group boosts."
+   ]
+  },
+  {
+   "id": "combat_progression",
+   "keys": [
+    "combat stats",
+    "combat progression",
+    "combat unlocks",
+    "achievements"
+   ],
+   "q": [
+    "did combat unlocks carry over"
+   ],
+   "a": [
+    "Combat levels and unlocks carried over to Arena, and your stats for both showed on the arm computer. It also added private matches and Oculus achievements."
+   ]
+  },
+  {
+   "id": "combat_buy",
+   "keys": [
+    "buy combat",
+    "combat price",
+    "combat dlc"
+   ],
+   "q": [
+    "how much was echo combat",
+    "how do i buy combat"
+   ],
+   "a": [
+    "Combat was a $9.99 add on, bought from the main menu, the Oculus store page, or a lobby terminal. Before the shutdown it was made free."
+   ]
+  },
+  {
+   "id": "meteor",
+   "keys": [
+    "meteor",
+    "rocket launcher"
+   ],
+   "q": [
+    "what is the meteor"
+   ],
+   "a": [
+    "The Meteor is Combat's explosive weapon, basically a rocket launcher, good from mid to long range."
+   ]
+  },
+  {
+   "id": "phase_shift",
+   "keys": [
+    "phase shift",
+    "invulnerable",
+    "phase out"
+   ],
+   "q": [
+    "what does phase shift do"
+   ],
+   "a": [
+    "Phase Shift lets you phase out of reality for a moment: you can't be hurt, so it's great for sneaking behind enemies or escaping."
+   ]
+  },
+  {
+   "id": "instant_repair",
+   "keys": [
+    "instant repair",
+    "heal grenade",
+    "healing"
+   ],
+   "q": [
+    "how do i heal in combat"
+   ],
+   "a": [
+    "Throw Instant Repair: it heals everyone it hits, you included. Repair Matrix heals nearby allies over time too."
+   ]
+  },
+  {
+   "id": "vr_league",
+   "keys": [
+    "vr league",
+    "esl",
+    "vr challenger league",
+    "intel",
+    "iem katowice",
+    "oculus connect 5"
+   ],
+   "q": [
+    "what was the vr league",
+    "was echo at iem"
+   ],
+   "a": [
+    "Before VRML there was ESL's VR Challenger League with Intel and Oculus, over two hundred thousand dollars across Echo Arena and The Unspoken, with finals at IEM Katowice in 2018. The 2018 VR League finals were at Oculus Connect 5."
+   ]
+  },
+  {
+   "id": "champions",
+   "keys": [
+    "champions",
+    "who won",
+    "winners",
+    "best team",
+    "eclipse",
+    "team gravity",
+    "jokr",
+    "leviathan",
+    "kangorillaz"
+   ],
+   "q": [
+    "who won vrml",
+    "who were the best echo teams",
+    "who won the world finals"
+   ],
+   "a": [
+    "Ec.LiP.se won IEM Katowice and the Oculus Connect 5 world finals in 2018, and Kangorillaz won at Oculus Connect 6. In VRML, Team Gravity ruled Europe, Jokr North America, and Leviathan Oceania."
+   ]
+  },
+  {
+   "id": "fastest_joust",
+   "keys": [
+    "fastest joust",
+    "joust record",
+    "record",
+    "tortoise"
+   ],
+   "q": [
+    "what is the fastest joust",
+    "what is the joust record"
+   ],
+   "a": [
+    "The fastest recorded VRML joust is about 1.27 seconds to the centre line, by Tortoise underscore in October 2021, timed from the spectator's view."
+   ]
+  },
+  {
+   "id": "servers",
+   "keys": [
+    "servers",
+    "server locations",
+    "regions",
+    "japan servers",
+    "ping"
+   ],
+   "q": [
+    "where are the echo servers",
+    "what regions does echo have"
+   ],
+   "a": [
+    "Echo had servers across North America, Europe, Oceania and Asia, with Japanese servers added on December 1, 2020."
+   ]
+  },
+  {
+   "id": "command_line",
+   "keys": [
+    "command line",
+    "launch options",
+    "arguments",
+    "noovr",
+    "spectatorstream",
+    "windowed"
+   ],
+   "q": [
+    "what launch options does echo have"
+   ],
+   "a": [
+    "Handy launch options: dash windowed to play without a headset, dash noovr, dash spectatorstream for spectating, dash level to pick a map, and dash offline."
+   ]
+  },
+  {
+   "id": "spark_more",
+   "keys": [
+    "spark features",
+    "ignite stats",
+    "replays",
+    "highlights",
+    "speaker system"
+   ],
+   "q": [
+    "what can spark do"
+   ],
+   "a": [
+    "Spark shows your server's location, live scores and pings, uploads stats to Ignite, records replays, does text to speech callouts, and can clip highlights. It even embeds the Echo VR Speaker System."
+   ]
+  },
+  {
+   "id": "atlas",
+   "keys": [
+    "atlas initiative",
+    "atlas",
+    "employer"
+   ],
+   "q": [
+    "what is the atlas initiative"
+   ],
+   "a": [
+    "The Atlas Initiative runs Kronos Two and employs Captain Rhodes. The Astrea's crew were Atlas members too."
+   ]
+  },
+  {
+   "id": "biomass",
+   "keys": [
+    "biomass",
+    "goo",
+    "bio weapon",
+    "weapon"
+   ],
+   "q": [
+    "what is the biomass"
+   ],
+   "a": [
+    "The biomass wakes up near electrical currents and absorbs anything it touches. Apollo says it's a biological weapon used by whoever attacked the Astrea."
+   ]
+  },
+  {
+   "id": "apollo",
+   "keys": [
+    "apollo",
+    "ship ai",
+    "astrea ai"
+   ],
+   "q": [
+    "who is apollo"
+   ],
+   "a": [
+    "Apollo is the Astrea's AI. He needs Jack's help fixing the ship, doubts him about Liv at first, then makes her the Astrea's new captain."
+   ]
+  },
+  {
+   "id": "lone_echo_tools",
+   "keys": [
+    "lone echo gameplay",
+    "plasma cutter",
+    "data scanner",
+    "wrist thrusters",
+    "lone echo tools"
+   ],
+   "q": [
+    "how do you play lone echo",
+    "what tools does jack have"
+   ],
+   "a": [
+    "You grab almost any surface to pull and push yourself around, steer with wrist thrusters, scan machinery with a data scanner, and cut with a plasma cutter. Echo Arena's movement comes straight from it."
+   ]
+  },
+  {
+   "id": "lone_echo_2_start",
+   "keys": [
+    "lone echo 2 start",
+    "after lone echo",
+    "continues"
+   ],
+   "q": [
+    "does lone echo 2 continue the story"
+   ],
+   "a": [
+    "Yes. Lone Echo Two picks up almost right after the first game, with Jack and Liv still around Saturn, working out where they've ended up."
+   ]
+  }
+ ]
+}

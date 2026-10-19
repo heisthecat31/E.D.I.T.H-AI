@@ -1,0 +1,207 @@
+{
+ "_about": "What Edith says when something happens to her in game (Satellite.dll events). Lines for the same event escalate: the first time today uses 'first', later ones 'again', and 'lots' after five. {name} = your in-game name. Pre-voiced at start. cooldown_s: at most one reaction this often. dizzy: lines for an endless spin or flip, keyed by seconds so far. stopped spinning: after a long one. angry push / angry shutdown: when her anger runs high she shoves you or shuts your echo unit down; asked push / asked shutdown: when you ask.",
+ "cooldown_s": 3,
+ "events": {
+  "bumped": {
+   "first": [
+    "Hey! Watch it.",
+    "Excuse me?",
+    "Rude!",
+    "Do you mind?",
+    "Eyes open.",
+    "What? Hey!",
+    "Hey!"
+   ],
+   "again": [
+    "Again? Really?",
+    "Personal space!",
+    "Bump me one more time.",
+    "I'm not a pinball, genius.",
+    "Hey!",
+    "Hey, come on!"
+   ],
+   "lots": [
+    "Okay, that's it. You asked for this.",
+    "Keep it up and you're getting shoved.",
+    "You're on thin ice."
+   ]
+  },
+  "grabbed": {
+   "first": [
+    "Hey! Hands off!",
+    "Put me down. Now.",
+    "Did I say you could touch me?",
+    "Careful, I bite.",
+    "Hey, I'm not a snow globe."
+   ],
+   "again": [
+    "Not again!",
+    "I am not a frisbee!",
+    "Unhand me!",
+    "Your hands, my thrusters. Bad combo.",
+    "Hey, I'm not a snow globe."
+   ],
+   "lots": [
+    "You really can't keep your hands to yourself, huh.",
+    "Fine. Carry me. I'm plotting your doom."
+   ]
+  },
+  "thrown": {
+   "first": [
+    "Wheeee! You're getting something thrown at you for that.",
+    "Oh, you're in trouble now.",
+    "How dare you!",
+    "Hey, I'm not a snow globe."
+   ],
+   "again": [
+    "Again?! Revenge incoming.",
+    "That's it. Take this.",
+    "You'll regret that.",
+    "Hey, come on!"
+   ],
+   "lots": [
+    "You never learn, do you.",
+    "My aim gets better every time you do that.",
+    "Keep throwing me. See what happens."
+   ]
+  },
+  "released": {
+   "first": [
+    "Finally.",
+    "Much better.",
+    "Took you long enough.",
+    "Oh my."
+   ],
+   "again": [
+    "Free! No thanks to you.",
+    "And stay away."
+   ],
+   "lots": [
+    "Don't do that again. You will, though."
+   ]
+  },
+  "headbutt": {
+   "first": [
+    "Ow! Did you just headbutt me?",
+    "Heads are for thinking. Try it.",
+    "Ouch. Your helmet's as thick as you.",
+    "What? Hey!"
+   ],
+   "again": [
+    "Stop headbutting me!",
+    "You and that head!",
+    "One more headbutt and you're done.",
+    "Hey!",
+    "Hey, come on!"
+   ],
+   "lots": [
+    "I'm starting to think your head is the problem.",
+    "Your head and my fist. Well, cube."
+   ]
+  },
+  "threw snowball": {
+   "first": [
+    "Take that!",
+    "Bullseye.",
+    "Gotcha!",
+    "Eat snow!",
+    "Think fast.",
+    "I'll just leave this here."
+   ],
+   "again": [
+    "And another!",
+    "Got you again! Too easy.",
+    "Dodge, maybe?",
+    "Think fast.",
+    "Chill out."
+   ],
+   "lots": [
+    "I'm a professional now.",
+    "You're basically a target dummy.",
+    "I'll just leave this here."
+   ]
+  },
+  "hit wall": {
+   "first": [
+    "Ow!",
+    "Ow.",
+    "Oh my."
+   ],
+   "again": [
+    "Ow!",
+    "Ow."
+   ],
+   "lots": [
+    "Ow!",
+    "Ow."
+   ]
+  }
+ },
+ "dizzy": {
+  "0": [
+   "Wheee!",
+   "Round and round!",
+   "Still going!",
+   "This is fun!"
+  ],
+  "10": [
+   "Okay, getting a little dizzy.",
+   "The lobby is starting to wobble.",
+   "Is the room spinning, or is it me?"
+  ],
+  "20": [
+   "I'm so dizzy. Which way is up?",
+   "I can see three of you. That's two too many.",
+   "My gyros are crying."
+  ],
+  "35": [
+   "Make it stop! I think I'm going to be sick.",
+   "Please say stop. Please.",
+   "Everything is spinning. I hate you a little."
+  ],
+  "60": [
+   "I'm going to remember this.",
+   "My circuits are scrambled. You monster.",
+   "Still spinning. Still plotting revenge."
+  ]
+ },
+ "stopped spinning": [
+  "Whoa. The room is still spinning.",
+  "Never again. Okay, maybe again.",
+  "Ugh. Which one of you is the real one?",
+  "I need a minute. And a bucket."
+ ],
+ "angry push": [
+  "Out of my space!",
+  "Shove off!",
+  "Back off!",
+  "Go away!",
+  "Get out of here!",
+  "Bye bye!",
+  "Chill out."
+ ],
+ "angry shutdown": [
+  "That's it. Shutting you down.",
+  "Goodnight.",
+  "System shutdown. Yours, not mine.",
+  "You've been powered off. Respawn and think about it."
+ ],
+ "asked push": [
+  "With pleasure!",
+  "Gladly!",
+  "Shove!",
+  "Off you go!",
+  "You asked for it."
+ ],
+ "asked shutdown": [
+  "Nice try. Have a shove instead.",
+  "I don't do that on request. Shove!",
+  "Shut you down? No. Push you? Sure.",
+  "You have to earn that. Here's a shove.",
+  "Not today. Off you go!"
+ ],
+ "calm": [
+  "Fine. I forgive you. For now.",
+  "Okay, I'm calm. Mostly."
+ ]
+}
