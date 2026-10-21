@@ -741,6 +741,8 @@ FACES = {"grabbed": ("surprised", 4), "thrown": ("hurt", 5), "headbutt": ("dizzy
 
 #: short commands she carries out at once: (order, pattern); her lines are lines.json order/<order>
 INSTANT = [
+    ("follow crowd", r"\b(follow (the |a )?(crowd|group|everyone|everybody|people)|go (to|with) (the )?(crowd|group|everyone))\b"),
+    ("roam", r"\b(free ?roam\w*|roam\w*|wander\w*|go explor\w*|explore|look around|have a look around|fly around)\b"),
     ("follow", r"\b(follow\w*|come with me|with me)\b"),
     ("come", r"\b(come (here|over|back|to me)|over here|get over here|come)\b"),
     ("home", r"\b(go home|home|spawn|go back to (the )?(start|middle|centre|center))\b"),
@@ -798,8 +800,8 @@ def instant(text: str):
     if len(t.split()) > 8 or "?" in text:
         return None
     hits = [(re.search(pat, t), o) for o, pat in INSTANT]
-    hits = sorted((m.start(), o) for m, o in hits if m)
-    return hits[0][1] if hits else None
+    hits = sorted((m.start(), m.start() - m.end(), o) for m, o in hits if m)   # (the longer of two at one place)
+    return hits[0][2] if hits else None
 
 
 def is_question(text: str) -> bool:
@@ -827,7 +829,7 @@ def no_learn(line: str, who: Optional[str], me: str, members: list) -> bool:
 def prime(name: str) -> str:
     n = name
     return (f"{n}, throw a ball at me. {n}, follow me. Come here, {n}. Stay there. Spin. Keep spinning until I say so. "
-            f"Do a front flip. Do a back flip. Stop. Push me. Shut me down. "
+            f"Do a front flip. Do a back flip. Stop. Push me. Shut me down. Free roam. Follow the crowd. "
             f"Go back to spawn. Go home. Throw a snowball. {n}, what are you doing? Echo Arena, Echo Combat, "
             f"Lone Echo, joust, regrab, stun.")
 

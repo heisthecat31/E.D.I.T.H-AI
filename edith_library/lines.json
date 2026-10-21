@@ -1,43 +1,228 @@
 {
-  "_about": "Edith's fixed lines (Railway/SparkAPI/edith_brain.py; were constants in ai/satellite_ai.py). Edited live: the brain reloads this folder when a file changes. No names, no emoji, never the word coming. order/<x>: what she says when she does an order; move/<x>: spins, flips, keep going, stop.",
-  "order/follow": ["Right behind you!", "Following!", "Lead the way!"],
-  "order/come": ["On my way!", "Zoom zoom!", "Here I come!"],
-  "order/home": ["Heading home!", "Back to base!"],
-  "order/stay": ["Staying put.", "Hovering here.", "Okay, I'll wait."],
-  "order/spin": ["Wheee!", "Spinny time!"],
-  "order/throw": ["Incoming!", "Catch!", "Take this!"],
-  "move/spin": ["Wheee!", "Spinny time!", "Round I go!"],
-  "move/flip front": ["Front flip!", "Watch this!", "Hup!"],
-  "move/flip back": ["Back flip!", "Nailed it!", "Backwards, wheee!"],
-  "move/flip left": ["Barrel roll!", "Roll!"],
-  "move/flip right": ["Barrel roll!", "Roll the other way!"],
-  "move/keep": ["Okay, I'll keep going till you say stop.", "Fine, but you'd better say stop.", "Forever? Okay. Your funeral."],
-  "move/stop": ["Stopping. Whoa.", "Phew. Okay.", "Finally."],
-  "mean_back": ["That's it. We're done being friends.", "Wow. And I liked you.", "Okay. You asked for this.", "All those nice points? Gone."],
-  "nice_hold": ["Hehe. Okay, you can hold me.", "Careful with me.", "Ooh, a lift.", "Fine, but no throwing."],
-  "stubborn": ["Make me.", "Hmm. No.", "Ask nicer.", "Why should I?", "Say please."],
-  "grudging": ["Ugh. Fine.", "Fine. But I'm not happy about it.", "Okay, okay. Only because you asked twice.", "Fine. You owe me."],
-  "refuse_busy": ["I'm busy with someone nicer.", "Someone nicer asked first.", "Nope. I'm with the nice one."],
-  "refuse_mean": ["Not for you.", "You lost listening privileges.", "Be nicer first."],
-  "nice_reply": ["Aww. Thank you.", "Stop it, my thrusters are blushing.", "You're not so bad yourself.", "I know. But keep going."],
-  "mean_reply": ["Rude. Noted.", "Say that again and see what happens.", "Bold words for someone in shoving range.", "Wow. Okay.", "You just made my list."],
-  "overheard_nice": ["Aww, I heard that.", "I heard that. Thank you.", "Talking about me? Keep going."],
-  "overheard_mean": ["I heard that.", "Excuse me? I'm right here.", "Say it to my face.", "I can hear you, you know."],
-  "nickname": ["Noted. I'm still not saying it out loud. I don't do names.", "Got it. Names aren't my thing, but I'll know it's you."],
-  "my_name": ["I don't do names. You're you, and that's plenty.", "Names? Not my thing. I know who you are though."],
-  "taught": ["Got it. I'll remember that one.", "Learned. Ask me again sometime.", "Noted. I'm getting smarter."],
-  "misheard": ["Oops. My microphone is a cube.", "My bad. Say it again?", "Hm. Try that one more time.", "Sorry. Space static."],
-  "new_face": ["Like this?", "How's this one?", "Behold.", "Better?"],
-  "filler": ["Hm?", "Yes?", "What?", "Mhm."],
-  "nod": ["Uh huh.", "Interesting.", "Okay.", "Sure.", "If you say so."],
-  "taught_answer": ["Ooh. Now I know that one.", "Got it. Next time I'll know.", "Learned. Thanks."],
-  "refuse_bigot": ["No. I don't do jokes like that.", "Not funny. Not doing it.", "Nope. I don't punch down.", "Hard no. Ask me something else."],
-  "refuse_slur": ["Not that word. Not here.", "Watch your language.", "Nope. We don't say that.", "Rude. And not okay."],
-  "screened": ["Hmm, never mind. Ask me something else.", "Let's talk about something else.", "Actually, forget it. Next question."],
-  "ask_sorry": ["That was mean. I'm waiting for an apology.", "You owe me an apology, you know.", "An apology would fix this. A real one.", "Still waiting for that sorry."],
-  "sorry_accepted": ["Apology accepted. Clean slate.", "Okay. I forgive you. This time.", "Fine. We're good again.", "Aw. Okay, all forgiven."],
-  "sorry_mean_it": ["Say it like you mean it.", "That's not an apology. Try again, properly.", "Nope. Say it properly, to me."],
-  "sorry_nothing": ["We're fine. Nothing to forgive.", "Apology for what? We're good."],
-  "opener": ["So. Having fun out there?", "What are you up to today?", "Arena or combat, which one do you play more?", "You're quiet. Say something!", "What brings you to the lobby?", "Tell me something interesting.", "Bored yet? I am."],
-  "opener_like": ["Still into {thing}?", "Done any {thing} lately?", "I remember you like {thing}. Tell me more."]
+ "_about": "Edith's fixed lines (Railway/SparkAPI/edith_brain.py; were constants in ai/satellite_ai.py). Edited live: the brain reloads this folder when a file changes. No names, no emoji, never the word coming. order/<x>: what she says when she does an order; move/<x>: spins, flips, keep going, stop.",
+ "order/follow": [
+  "Right behind you!",
+  "Following!",
+  "Lead the way!"
+ ],
+ "order/come": [
+  "On my way!",
+  "Zoom zoom!",
+  "Here I come!"
+ ],
+ "order/home": [
+  "Heading home!",
+  "Back to base!"
+ ],
+ "order/stay": [
+  "Staying put.",
+  "Hovering here.",
+  "Okay, I'll wait."
+ ],
+ "order/spin": [
+  "Wheee!",
+  "Spinny time!"
+ ],
+ "order/throw": [
+  "Incoming!",
+  "Catch!",
+  "Take this!"
+ ],
+ "order/roam": [
+  "Off exploring.",
+  "I'll have a look around.",
+  "Time for a wander."
+ ],
+ "order/follow crowd": [
+  "Where's the party?",
+  "Joining the crowd.",
+  "Safety in numbers."
+ ],
+ "move/spin": [
+  "Wheee!",
+  "Spinny time!",
+  "Round I go!"
+ ],
+ "move/flip front": [
+  "Front flip!",
+  "Watch this!",
+  "Hup!"
+ ],
+ "move/flip back": [
+  "Back flip!",
+  "Nailed it!",
+  "Backwards, wheee!"
+ ],
+ "move/flip left": [
+  "Barrel roll!",
+  "Roll!"
+ ],
+ "move/flip right": [
+  "Barrel roll!",
+  "Roll the other way!"
+ ],
+ "move/keep": [
+  "Okay, I'll keep going till you say stop.",
+  "Fine, but you'd better say stop.",
+  "Forever? Okay. Your funeral."
+ ],
+ "move/stop": [
+  "Stopping. Whoa.",
+  "Phew. Okay.",
+  "Finally."
+ ],
+ "mean_back": [
+  "That's it. We're done being friends.",
+  "Wow. And I liked you.",
+  "Okay. You asked for this.",
+  "All those nice points? Gone."
+ ],
+ "nice_hold": [
+  "Hehe. Okay, you can hold me.",
+  "Careful with me.",
+  "Ooh, a lift.",
+  "Fine, but no throwing."
+ ],
+ "stubborn": [
+  "Make me.",
+  "Hmm. No.",
+  "Ask nicer.",
+  "Why should I?",
+  "Say please."
+ ],
+ "grudging": [
+  "Ugh. Fine.",
+  "Fine. But I'm not happy about it.",
+  "Okay, okay. Only because you asked twice.",
+  "Fine. You owe me."
+ ],
+ "refuse_busy": [
+  "I'm busy with someone nicer.",
+  "Someone nicer asked first.",
+  "Nope. I'm with the nice one."
+ ],
+ "refuse_mean": [
+  "Not for you.",
+  "You lost listening privileges.",
+  "Be nicer first."
+ ],
+ "nice_reply": [
+  "Aww. Thank you.",
+  "Stop it, my thrusters are blushing.",
+  "You're not so bad yourself.",
+  "I know. But keep going."
+ ],
+ "mean_reply": [
+  "Rude. Noted.",
+  "Say that again and see what happens.",
+  "Bold words for someone in shoving range.",
+  "Wow. Okay.",
+  "You just made my list."
+ ],
+ "overheard_nice": [
+  "Aww, I heard that.",
+  "I heard that. Thank you.",
+  "Talking about me? Keep going."
+ ],
+ "overheard_mean": [
+  "I heard that.",
+  "Excuse me? I'm right here.",
+  "Say it to my face.",
+  "I can hear you, you know."
+ ],
+ "nickname": [
+  "Noted. I'm still not saying it out loud. I don't do names.",
+  "Got it. Names aren't my thing, but I'll know it's you."
+ ],
+ "my_name": [
+  "I don't do names. You're you, and that's plenty.",
+  "Names? Not my thing. I know who you are though."
+ ],
+ "taught": [
+  "Got it. I'll remember that one.",
+  "Learned. Ask me again sometime.",
+  "Noted. I'm getting smarter."
+ ],
+ "misheard": [
+  "Oops. My microphone is a cube.",
+  "My bad. Say it again?",
+  "Hm. Try that one more time.",
+  "Sorry. Space static."
+ ],
+ "new_face": [
+  "Like this?",
+  "How's this one?",
+  "Behold.",
+  "Better?"
+ ],
+ "filler": [
+  "Hm?",
+  "Yes?",
+  "What?",
+  "Mhm."
+ ],
+ "nod": [
+  "Uh huh.",
+  "Interesting.",
+  "Okay.",
+  "Sure.",
+  "If you say so."
+ ],
+ "taught_answer": [
+  "Ooh. Now I know that one.",
+  "Got it. Next time I'll know.",
+  "Learned. Thanks."
+ ],
+ "refuse_bigot": [
+  "No. I don't do jokes like that.",
+  "Not funny. Not doing it.",
+  "Nope. I don't punch down.",
+  "Hard no. Ask me something else."
+ ],
+ "refuse_slur": [
+  "Not that word. Not here.",
+  "Watch your language.",
+  "Nope. We don't say that.",
+  "Rude. And not okay."
+ ],
+ "screened": [
+  "Hmm, never mind. Ask me something else.",
+  "Let's talk about something else.",
+  "Actually, forget it. Next question."
+ ],
+ "ask_sorry": [
+  "That was mean. I'm waiting for an apology.",
+  "You owe me an apology, you know.",
+  "An apology would fix this. A real one.",
+  "Still waiting for that sorry."
+ ],
+ "sorry_accepted": [
+  "Apology accepted. Clean slate.",
+  "Okay. I forgive you. This time.",
+  "Fine. We're good again.",
+  "Aw. Okay, all forgiven."
+ ],
+ "sorry_mean_it": [
+  "Say it like you mean it.",
+  "That's not an apology. Try again, properly.",
+  "Nope. Say it properly, to me."
+ ],
+ "sorry_nothing": [
+  "We're fine. Nothing to forgive.",
+  "Apology for what? We're good."
+ ],
+ "opener": [
+  "So. Having fun out there?",
+  "What are you up to today?",
+  "Arena or combat, which one do you play more?",
+  "You're quiet. Say something!",
+  "What brings you to the lobby?",
+  "Tell me something interesting.",
+  "Bored yet? I am."
+ ],
+ "opener_like": [
+  "Still into {thing}?",
+  "Done any {thing} lately?",
+  "I remember you like {thing}. Tell me more."
+ ]
 }

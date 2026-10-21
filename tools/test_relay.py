@@ -1,4 +1,4 @@
-"""Test the relay as three games in one match would: rooms, her balls from a puppet to everyone, the
+"""Test the relay as three games in one match would: rooms, her balls and hushes from a puppet to everyone, the
 ball rate limit, and that balls don't use up the other messages' budget.
 
     python tools/test_relay.py [http://127.0.0.1:8000]
@@ -59,6 +59,13 @@ async def main():
     got = await texts(socks["Bob"], 0.4)
     check(any(m["t"] == "ball" and m["k"] == 7 and m["held"] == 0 and m["from"] == "Host" for m in got),
           "the host's release reaches the others too")
+
+    print("\n== a puppet talks over her (hush)")
+    await socks["Ann"].send(json.dumps({"t": "hush", "by": "Ann"}))
+    for n in ("Host", "Bob"):
+        got = await texts(socks[n], 0.4)
+        check(any(m["t"] == "hush" and m.get("by") == "Ann" and m["from"] == "Ann" for m in got),
+              f"{n} gets it, so she stops there too")
 
     print("\n== rate limit: 60 balls at once")
     for i in range(60):

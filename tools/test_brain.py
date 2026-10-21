@@ -108,6 +108,7 @@ async def main():
 
         # -- 1. re-voiced lines: "stream": true --------------------------------------------------------
         print("\n== re-voice")
+        before = api("GET", "revoice")["lines"]                   # (the library's own entries stay)
         found = api("GET", "lines?q=Following")
         check(any(l["text"] == "Following!" for l in found), "GET /lines finds a stock line with its keys")
         key = next(l["key"] for l in found if l["text"] == "Following!")
@@ -126,7 +127,7 @@ async def main():
         api("POST", "revoice", {"stream_all": False})
         for t in LINES["order/follow"]:
             api("DELETE", "revoice/" + urllib.request.quote(t))
-        check(api("GET", "revoice")["lines"] == [], "DELETE /revoice/{key or text} unmarks")
+        check(api("GET", "revoice")["lines"] == before, "DELETE /revoice/{key or text} unmarks")
 
         # -- 2. the barrier ------------------------------------------------------------------------------
         print("\n== barrier")

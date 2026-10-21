@@ -29,6 +29,8 @@ Every player running Satellite.dll keeps one WebSocket open here:
    - text {"t": "ball", "k": <0-15>, "pos": [x,y,z], "vel": [x,y,z], "held": 0|1} from any member
      (whoever holds one of her balls: 15/s while held, once more on release) -> everyone else.
      Its own limit (MAX_BALLS_PER_SEC), apart from the other text messages' MAX_EVENTS_PER_SEC.
+   - text {"t": "hush", "by": "<name>"} from any member (someone talked over her on that game: every
+     game cuts her line short) -> everyone else. Its own budget of MAX_BALLS_PER_SEC.
    Text arrives as the same JSON with "from": "<sender>" added.
 
 Nothing is stored. A name can only be held by one connection; the newest wins.
@@ -58,7 +60,7 @@ MAX_HELLOS_PER_MIN = 60
 SEND_QUEUE = 64             # messages buffered per receiver before old ones are dropped
 HOST_TO_GROUP = {"voice", "snow", "face"}
 TO_HOST = {"touch", "heard"}
-ANY_TO_GROUP = {"ball"}
+ANY_TO_GROUP = {"ball", "hush"}
 
 
 class Client:
@@ -255,7 +257,7 @@ async def edith_ws(ws: WebSocket):
                     if client.rate_ok("hello", MAX_HELLOS_PER_MIN, 60.0):
                         _hello(client, data)
                 elif data.get("t") in ANY_TO_GROUP:
-                    if client.name and client.rate_ok("ball", MAX_BALLS_PER_SEC, 1.0):
+                    if client.name and client.rate_ok(data["t"], MAX_BALLS_PER_SEC, 1.0):   # (each its own budget)
                         _route_text(client, data)
                 elif client.name and client.rate_ok("events", MAX_EVENTS_PER_SEC, 1.0):
                     _route_text(client, data)

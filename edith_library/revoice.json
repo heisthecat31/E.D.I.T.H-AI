@@ -1,5 +1,11 @@
 {
  "_about": "Lines whose voice-bank copy in EDITH.dll is broken (user, 2026-10-19). Any reply whose key or alt (or a part's) matches a line here carries \"stream\": true, and the game streams the server's Kokoro af_heart render instead of playing its bank copy. Edit over the admin API (POST /edith/brain/revoice, DELETE /edith/brain/revoice/{key}, POST /edith/brain/revoice/render) or tools/revoice.py. stream_all: every line streams (the banks ignored).",
  "stream_all": false,
- "lines": []
+ "lines": [
+  {
+   "text": "Ow.",
+   "key": "97e951565040feb15a37",
+   "why": "bank copy sounds like \"oh\" (user, 2026-10-19)"
+  }
+ ]
 }
